@@ -16,6 +16,7 @@ import { EditProdsComponent } from './components/edit-prods/edit-prods.component
 
 import { UsersService } from './services/users.service';
 import { ProductsService } from './services/products.service';
+import { NewProdComponent } from './new-prod/new-prod.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ProductsService } from './services/products.service';
     CartComponent,
     BoughtComponent,
     LogregComponent,
-    EditProdsComponent
+    EditProdsComponent,
+    NewProdComponent
   ],
   imports: [
     BrowserModule,
