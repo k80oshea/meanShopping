@@ -1,0 +1,33 @@
+.prods {
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.wrapper {
+    width: 230px;
+    height: 145px;
+    margin: 10px 5px;
+    display: block;
+}
+img {
+    opacity: 1;
+    display: block;
+    width: 230px;
+    height: 145px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.wrapper:hover {
+    opacity: 0.3;
+}
+.prodname {
+    opacity: 1;
+    font-size: 12px;
+    margin: 5px auto; 
+    text-align: center;
+}
+.top {
+    height: 32px;
+    float: right;
+    display: block;
+}

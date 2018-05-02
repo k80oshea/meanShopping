@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-6">
+      <h2>Register</h2>
+      <div *ngIf="regerrs">
+        <ul *ngFor="let err of regerrs">
+          <li>{{err}}</li>
+        </ul>
+      </div>
+      <form (submit)="register()"  class="form-group">
+          <div>First Name: 
+            <div class="alert alert-danger" *ngIf="regfirst.invalid && regfirst.touched">First name is required and must be between 3 and 255 characters</div>
+            <input name="first" class="form-control" [(ngModel)]="regging.first" required minlength="3" maxlength="255" #regfirst="ngModel"></div>
+          <div>Last Name: 
+            <div class="alert alert-danger" *ngIf="reglast.invalid && reglast.touched">Last name is required and must be between 3 and 255 characters</div>
+            <input name="last" class="form-control" [(ngModel)]="regging.last" required minlength="3" maxlength="255" #reglast="ngModel"></div>
+          <div>Email: 
+            <div class="alert alert-danger" *ngIf="regemail.invalid && regemail.touched">Email is required and must be between 3 and 255 characters</div>
+            <input name="email" class="form-control" [(ngModel)]="regging.email" required minlength="3" maxlength="255" #regemail="ngModel"></div> 
+          <div>Password: 
+            <div class="alert alert-danger" *ngIf="regpassword.invalid && regpassword.touched">Password must have at least 1 number, 1 uppercase letter, 1 special character, and be between 8 and 32 characters long</div>
+            <input type="password" name="password" class="form-control" [(ngModel)]="regging.password" required minlength="3" maxlength="255" #regpassword="ngModel"></div> 
+          <div>Confirm Password: 
+            <div class="alert alert-danger" *ngIf="regconfirm.invalid && regconfirm.touched">Confirmation password must have at least 1 number, 1 uppercase letter, 1 special character, and be between 8 and 32 characters long</div>
+            <input type="password" name="confirm" class="form-control" [(ngModel)]="regging.confirm" required minlength="3" maxlength="255" #regconfirm="ngModel"></div> 
+          <br>
+          <input type="submit" value="Register" class="form-control btn btn-primary"/>
+      </form>
+    </div>
+    <div class="col-md-6">
+        <h2>Login</h2>
+        <div *ngIf="logerrs" class="alert alert-danger">
+          <p>{{logerrs}}</p>
+        </div>
+        <form (submit)="login()" class="form-group">
+          <div>Email: 
+            <div class="alert alert-danger" *ngIf="logemail.invalid && logemail.touched">Email is required and must be between 3 and 255 characters</div>
+            <input name="email" class="form-control" [(ngModel)]="logging.email" required minlength="3" maxlength="255" #logemail="ngModel"></div> 
+          <div>Password: 
+            <div class="alert alert-danger" *ngIf="logpassword.invalid && logpassword.touched">Password must have at least 1 number, 1 uppercase letter, 1 special character, and be between 8 and 32 characters long</div>
+            <input name="password" type="password" class="form-control" [(ngModel)]="logging.password" required minlength="3" maxlength="255" #logpassword="ngModel"></div> 
+          <br>
+          <input type="submit" value="Login" class="form-control btn btn-primary"/>
+        </form>
+    </div>
+</div>

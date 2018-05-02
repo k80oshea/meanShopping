@@ -1,0 +1,29 @@
+<div>
+  <h3 class="row">Edit Products</h3>
+  <div class="scrollie">
+    <div *ngFor="let prod of AllProds">
+      <div class="row edits">
+        <form (submit)="edit(product)" class="form-control form-inline">
+          <div class="col-md-4">    
+            <p>Name: </p> 
+            <input type="text" name="name" [(ngModel)]="product.name" required minlength="3" maxlength="255" #productname="ngModel" value="product.name">
+            <p>Photo Source: </p>
+            <input type="text" name="photosrc" [(ngModel)]="product.photosrc" required minlength="3" maxlength="255" #productsrc="ngModel" value="product.photosrc">
+          </div>
+          <div class="col-md-4">
+            <p>Quantity: </p>
+            <input type="number" name="quantity" [(ngModel)]="product.quantity" value="0" required min="0" max="300" #productquant="ngModel" value="product.quantity">
+            <p>Price: </p>
+            <input type="number" name="price" [(ngModel)]="product.price" value="0.00" max="1000000" required min="0" #productprice="ngModel" value="product.price">  
+          </div>
+          <div class="col-md-4">
+            <p>Description: </p>
+            <textarea name="desc" [(ngModel)]="product.desc" required minlength="3" maxlength="255" #productdesc="ngModel" value="product.desc"></textarea>  
+            <br>
+            <p><input type="submit" value="Edit product" class="btn btn-sm btn-primary"></p>    
+          </div>
+        </form>
+      <!-- </div>
+    </div>
+  </div>
+</div> -->

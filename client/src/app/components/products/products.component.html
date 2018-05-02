@@ -1,0 +1,16 @@
+<div class="top row">
+  <button (click)="cart()" class="btn btn-sm btn-primary">Your Shopping Cart</button>
+  <button (click)="logout()" class="btn btn-sm btn-primary">Logout</button>
+</div>
+<div class="row">
+<div class="prods">
+  <div *ngFor="let prod of products" style="display: float;">
+    <div class="wrapper">
+      <img src="{{prod.photosrc}}" alt="Image of {{prod.name}}" class="img-thumbnail" (click)="selectprod()">
+      <div class="prodname">{{prod.name}}</div>
+    </div>
+  </div>
+</div></div>
+<div class="selectprod">
+  <app-singleprod></app-singleprod>
+</div>

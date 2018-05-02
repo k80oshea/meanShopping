@@ -1,0 +1,20 @@
+h3 {
+    font-family: 'Pacifico', cursive; 
+    color: #007bff;
+    margin: 10px 0px;
+}
+.prodforms {
+    margin: 10px auto;  
+}
+.edits {
+    margin: 10px auto;
+}
+.scrollie {
+    height: 400px;
+    overflow: auto;
+}
+.top {
+    height: 32px;
+    float: right;
+    display: block;
+}
