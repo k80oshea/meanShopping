@@ -13,10 +13,10 @@ import { CartComponent } from './components/cart/cart.component';
 import { BoughtComponent } from './components/bought/bought.component';
 import { LogregComponent } from './components/logreg/logreg.component';
 import { EditProdsComponent } from './components/edit-prods/edit-prods.component';
+import { NewProdComponent } from './components/new-prod/new-prod.component';
 
 import { UsersService } from './services/users.service';
 import { ProductsService } from './services/products.service';
-import { NewProdComponent } from './new-prod/new-prod.component';
 
 
 @NgModule({

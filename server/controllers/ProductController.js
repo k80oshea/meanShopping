@@ -60,8 +60,7 @@ class ProductController{
             if(err) {
                 res.json({errors: "Error finding prod to delete"})
             }
-            else {            
-                // console.log(prod);
+            else {
                 res.json("prod successfully deleted");                   
             }
         })

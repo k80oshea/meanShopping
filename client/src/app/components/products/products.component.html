@@ -1,16 +1,21 @@
-<div class="top row">
-  <button (click)="cart()" class="btn btn-sm btn-primary">Your Shopping Cart</button>
-  <button (click)="logout()" class="btn btn-sm btn-primary">Logout</button>
-</div>
-<div class="row">
-<div class="prods">
-  <div *ngFor="let prod of products" style="display: float;">
-    <div class="wrapper">
-      <img src="{{prod.photosrc}}" alt="Image of {{prod.name}}" class="img-thumbnail" (click)="selectprod()">
-      <div class="prodname">{{prod.name}}</div>
+<div class="container">
+  <div class="row links">
+    <div class="col-12 d-flex justify-content-end">    
+      <button (click)="cart()" class="btn btn-sm btn-primary">Your Shopping Cart</button>
+      <button (click)="logout()" class="btn btn-sm btn-primary">Logout</button>
     </div>
   </div>
-</div></div>
-<div class="selectprod">
-  <app-singleprod></app-singleprod>
+  <div class="row">
+    <div class="prods col-md-10 scrollie">
+      <div *ngFor="let prod of products" class="row">
+        <div class="wrapper">
+          <img src="{{prod.photosrc}}" alt="Image of {{prod.name}}" class="img-thumbnail" (click)="select(prod)">
+          <!-- <div class="prodname">{{prod.name}}</div> -->
+        </div> 
+      </div>
+    </div>
+    <div *ngIf="selectprod" class="col-md-2">
+      <app-singleprod [userId]="userId" [selected]="selected" (myCartEvent)="all()"></app-singleprod>
+    </div> 
+  </div>
 </div>

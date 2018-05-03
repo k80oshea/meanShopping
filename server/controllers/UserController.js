@@ -1,6 +1,7 @@
 let User = require("mongoose").model("User");
-let bcrypt = require("bcrypt-nodejs");
+let Product = require("mongoose").model("Product");
 
+let bcrypt = require("bcrypt-nodejs");
 
 class UserController{
     register(req, res) {
@@ -91,7 +92,12 @@ class UserController{
             res.json(false);
         }
     }
+    logout(req, res) {
+        req.session.userId = null;
+        res.json(true)
+    }
     cart(req, res) { 
+        console.log(req.body)
         User.find({_id:req.params.id})
         .populate({
             model:"Product",
@@ -102,13 +108,56 @@ class UserController{
                 res.json({errors: "Failed to lookup user."});
             }
             else {
-                res.json(user);
+                console.log("adding things", req.body)
+                // push prod id and quantity as tuple? 
+                // delete prod from "inventory" on product
+                // user.cart.push(req.body)
+                // Product.findOne({_id: req.params.id}, (err, prod)=> {
+                //     if(err) {
+                //         res.json({errors: err});                    
+                //     }
+                //     else {
+                //         prod.quantity = req.body.quantity || prod.quantity;
+                //         prod.save(function(err) {
+                //             if(err) {
+                //                 res.json({errors: err});
+                //             }
+                //             else {
+                //                 res.json(prod);
+                //             }
+                //         })
+                //     }
+                // })
+                user.save(function(err) {
+                    if(err) {
+                        res.json({errors: "Could not add to cart"});
+                    }
+                    else {
+                        res.json(user);
+                    }
+                })
             }
         })
     }
-    logout(req, res) {
-        req.session.userId = null;
-        res.json(true)
+    show(req, res) {
+        if(req.session.id) {
+            User.findOne({_id:req.session.id})
+            .populate({
+                model:"Product",
+                path:"Cart"
+            })
+            .exec((err, user)=> {
+                if(user) {
+                    res.json(user);
+                }
+                else{
+                    res.json({errors: err});
+                }
+            })
+        }
+        else {
+            res.json(false);
+        }
     }
     // destroy(req, res) {
     //     User.findOne({_id: req.session._id}, (err, user)=> { 

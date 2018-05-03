@@ -130,6 +130,7 @@ var cart_component_1 = __webpack_require__("./src/app/components/cart/cart.compo
 var bought_component_1 = __webpack_require__("./src/app/components/bought/bought.component.ts");
 var logreg_component_1 = __webpack_require__("./src/app/components/logreg/logreg.component.ts");
 var edit_prods_component_1 = __webpack_require__("./src/app/components/edit-prods/edit-prods.component.ts");
+var new_prod_component_1 = __webpack_require__("./src/app/components/new-prod/new-prod.component.ts");
 var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
 var AppModule = /** @class */ (function () {
@@ -145,7 +146,8 @@ var AppModule = /** @class */ (function () {
                 cart_component_1.CartComponent,
                 bought_component_1.BoughtComponent,
                 logreg_component_1.LogregComponent,
-                edit_prods_component_1.EditProdsComponent
+                edit_prods_component_1.EditProdsComponent,
+                new_prod_component_1.NewProdComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -170,14 +172,14 @@ exports.AppModule = AppModule;
 /***/ "./src/app/components/admin/admin.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.prodforms {\r\n    margin: 10px auto;  \r\n}\r\n.edits {\r\n    margin: 10px auto;\r\n}\r\n.scrollie {\r\n    height: 400px;\r\n    overflow: auto;\r\n}\r\n.top {\r\n    height: 32px;\r\n    float: right;\r\n    display: block;\r\n}"
+module.exports = ".top {\r\n    height: 32px;\r\n    float: right;\r\n    display: block;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"top\">\n  <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">User View - All Products</button>\n  <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n</div>\n<div>\n  <h3 class=\"row\">New Product</h3>\n  <div class=\"row\">\n    <div class=\"alert alert-danger\" *ngIf=\"prodname.invalid && prodname.touched\">Name of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"proddesc.invalid && proddesc.touched\">Description of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodsrc.invalid && prodsrc.touched\">Photo source of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodquant.invalid && prodquant.touched\">Maximum product quantity is 300.</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodprice.invalid && prodprice.touched\">Product price required, maximum $1,000,000.00.</div>\n  </div>\n  <div class=\"row prodforms\"> \n    <form (submit)=\"create()\" class=\"form-control form-inline\">\n      <div class=\"col-md-4\">\n        <p>Name: </p> \n        <input type=\"text\" name=\"name\" [(ngModel)]=\"newProd.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\">\n        <p>Photo Source: </p>\n        <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"newProd.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\">\n      </div>\n      <div class=\"col-md-4\">\n        <p>Quantity: </p>\n        <input type=\"number\" name=\"quantity\" [(ngModel)]=\"newProd.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\">\n        <p>Price: </p>\n        <input type=\"number\" name=\"price\" [(ngModel)]=\"newProd.price\" value=\"0\"  required min=\"0\" max=\"1000000\" #prodprice=\"ngModel\">  \n      </div>\n      <div class=\"col-md-4\">\n        <p>Description: </p>\n        <textarea name=\"desc\" [(ngModel)]=\"newProd.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\"></textarea>  \n        <p><input type=\"submit\" value=\"Add product\" class=\"btn btn-sm btn-primary\"></p>    \n      </div>\n    </form>\n  </div> \n</div>\n<div class=\"editings\">\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <EditProdsComponent [AllProds]=\"products\"></EditProdsComponent>\n  </div>\n</div>\n<!-- [user]=\"user\" -->\n<!-- <div>\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <div *ngFor=\"let prod of products\">\n      <div class=\"row edits\">\n        <form (submit)=\"edit(prod)\" class=\"form-control form-inline\">\n          <div class=\"col-md-4\">    \n            <p>Name: </p> \n            <input type=\"text\" name=\"name\" [(ngModel)]=\"prod.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\" value=\"prod.name\">\n            <p>Photo Source: </p>\n            <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"prod.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\" value=\"prod.photosrc\">\n          </div>\n          <div class=\"col-md-4\">\n            <p>Quantity: </p>\n            <input type=\"number\" name=\"quantity\" [(ngModel)]=\"prod.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\" value=\"prod.quantity\">\n            <p>Price: </p>\n            <input type=\"number\" name=\"price\" [(ngModel)]=\"prod.price\" value=\"0.00\" max=\"1000000\" required min=\"0\" #prodprice=\"ngModel\" value=\"prod.price\">  \n          </div>\n          <div class=\"col-md-4\">\n            <p>Description: </p>\n            <textarea name=\"desc\" [(ngModel)]=\"prod.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\" value=\"prod.desc\"></textarea>  \n            <br>\n            <p><input type=\"submit\" value=\"Edit product\" class=\"btn btn-sm btn-primary\"></p>    \n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div> -->"
+module.exports = "<div class=\"top\">\n  <!-- <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">User View</button> -->\n  <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n</div>\n<app-new-prod (myNewEvent)=\"all()\"></app-new-prod>\n<app-edit-prods [AllProds]=\"products\" (myEditEvent)=\"all()\"></app-edit-prods>"
 
 /***/ }),
 
@@ -206,39 +208,14 @@ var AdminComponent = /** @class */ (function () {
         this.router = router;
         this.pServ = pServ;
         this.uServ = uServ;
-        this.myEvent = new core_1.EventEmitter();
     }
     AdminComponent.prototype.ngOnInit = function () {
-        // if(!this.user) {
-        this.session();
-        // }
+        if (!this.uServ.isValid())
+            this.router.navigate(["/"]);
+        if (!this.uServ.isAdmin())
+            this.router.navigate(["/browse"]);
+        this.userId = this.uServ.session();
         this.all();
-        this.newProd = {
-            name: "",
-            desc: "",
-            photosrc: "",
-            quantity: 0,
-            price: 0
-        };
-        // this.route.params.subscribe((params: Params) => this.petId = params['id']);
-    };
-    AdminComponent.prototype.session = function () {
-        var _this = this;
-        this.uServ.session(function (data) {
-            // console.log(data);
-            if (data == false) {
-                _this.router.navigate(["/"]); ///how to redirect for users logged in to prev page?
-            }
-            else {
-                _this.user = data;
-                if (_this.user.admin == false) {
-                    _this.router.navigate(["/products"]);
-                }
-            }
-        });
-    };
-    AdminComponent.prototype.browse = function () {
-        this.router.navigate(["/browse"]);
     };
     AdminComponent.prototype.all = function () {
         var _this = this;
@@ -246,52 +223,12 @@ var AdminComponent = /** @class */ (function () {
             _this.products = data;
         });
     };
-    AdminComponent.prototype.create = function () {
-        var _this = this;
-        this.pServ.create(this.newProd, function (data) {
-            if (data.errors) {
-                // this.newProd = { name: this.newProd.name, type: this.newProd.type, desc: this.newProd.desc, skills: this.newProd.skills };
-                _this.errors = data.errors;
-                console.log(data.errors);
-            }
-            else {
-                _this.myEvent.emit(data);
-                _this.all();
-                _this.newProd = {
-                    name: "",
-                    desc: "",
-                    photosrc: "",
-                    quantity: 0,
-                    price: 0
-                };
-            }
-        });
-    };
-    AdminComponent.prototype.edit = function (prod) {
-        var _this = this;
-        this.pServ.update(prod, function (data) {
-            if (data.errors) {
-                // this.editProd = { name: this.editProd.name, desc: this.editProd.desc, photosrc: this.editProd.photosrc, quantity: this.editProd.quantity, price: this.editProd.price };
-                // this.errors = data.errors;    
-                console.log(data);
-            }
-            else {
-                _this.all();
-            }
-        });
+    AdminComponent.prototype.browse = function () {
+        this.router.navigate(["/browse"]);
     };
     AdminComponent.prototype.logout = function () {
-        var _this = this;
-        this.uServ.logout(function (data) {
-            if (data == true) {
-                _this.router.navigate(["/"]);
-            }
-        });
+        this.uServ.logout();
     };
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", Object)
-    ], AdminComponent.prototype, "myEvent", void 0);
     AdminComponent = __decorate([
         core_1.Component({
             selector: 'app-admin',
@@ -367,7 +304,7 @@ module.exports = ""
 /***/ "./src/app/components/cart/cart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  cart works!\n</p>\n"
+module.exports = "<p>\n  cart works!\n</p>\n<ul *ngFor=\"let item of cart\">\n  <li>{{item}}</li>\n</ul>"
 
 /***/ }),
 
@@ -387,10 +324,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
+var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var CartComponent = /** @class */ (function () {
-    function CartComponent() {
+    function CartComponent(route, router, pServ, uServ) {
+        this.route = route;
+        this.router = router;
+        this.pServ = pServ;
+        this.uServ = uServ;
     }
     CartComponent.prototype.ngOnInit = function () {
+        if (!this.uServ.isValid())
+            this.router.navigate(["/"]);
+        // if(this.uServ.isAdmin()) this.router.navigate(["/admin"]);
+        this.userId = this.uServ.session();
+        this.cart();
+    };
+    // this.route.params.subscribe((params: Params) => this.petId = params['id']);
+    CartComponent.prototype.cart = function () {
+        var _this = this;
+        this.uServ.find(this.userId, function (data) {
+            _this.cart = data.cart;
+            console.log(_this.cart);
+        });
     };
     CartComponent = __decorate([
         core_1.Component({
@@ -398,7 +355,7 @@ var CartComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/cart/cart.component.html"),
             styles: [__webpack_require__("./src/app/components/cart/cart.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, products_service_1.ProductsService, users_service_1.UsersService])
     ], CartComponent);
     return CartComponent;
 }());
@@ -410,14 +367,14 @@ exports.CartComponent = CartComponent;
 /***/ "./src/app/components/edit-prods/edit-prods.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.edits {\r\n    margin: 10px auto;\r\n}\r\n.scrollie {\r\n    height: 400px;\r\n    overflow: auto;\r\n}\r\nimg {\r\n    display: block;\r\n    width: 230px;\r\n    height: 145px;\r\n    -webkit-transition: .5s ease;\r\n    transition: .5s ease;\r\n    -webkit-backface-visibility: hidden;\r\n            backface-visibility: hidden;\r\n}\r\n.thumb {\r\n    /* vertical-align: middle; */\r\n    top: 7px;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/edit-prods/edit-prods.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <div *ngFor=\"let prod of AllProds\">\n      <div class=\"row edits\">\n        <form (submit)=\"edit(product)\" class=\"form-control form-inline\">\n          <div class=\"col-md-4\">    \n            <p>Name: </p> \n            <input type=\"text\" name=\"name\" [(ngModel)]=\"product.name\" required minlength=\"3\" maxlength=\"255\" #productname=\"ngModel\" value=\"product.name\">\n            <p>Photo Source: </p>\n            <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"product.photosrc\" required minlength=\"3\" maxlength=\"255\" #productsrc=\"ngModel\" value=\"product.photosrc\">\n          </div>\n          <div class=\"col-md-4\">\n            <p>Quantity: </p>\n            <input type=\"number\" name=\"quantity\" [(ngModel)]=\"product.quantity\" value=\"0\" required min=\"0\" max=\"300\" #productquant=\"ngModel\" value=\"product.quantity\">\n            <p>Price: </p>\n            <input type=\"number\" name=\"price\" [(ngModel)]=\"product.price\" value=\"0.00\" max=\"1000000\" required min=\"0\" #productprice=\"ngModel\" value=\"product.price\">  \n          </div>\n          <div class=\"col-md-4\">\n            <p>Description: </p>\n            <textarea name=\"desc\" [(ngModel)]=\"product.desc\" required minlength=\"3\" maxlength=\"255\" #productdesc=\"ngModel\" value=\"product.desc\"></textarea>  \n            <br>\n            <p><input type=\"submit\" value=\"Edit product\" class=\"btn btn-sm btn-primary\"></p>    \n          </div>\n        </form>\n      <!-- </div>\n    </div>\n  </div>\n</div> -->"
+module.exports = "<div>\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <div *ngFor=\"let prod of AllProds\">\n      <div class=\"row edits\">\n        <div class=\"col-md-3 thumb\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n        </div>\n        <form (submit)=\"edit(prod)\" class=\"form-control form-inline col-md-8\">\n          <div *ngIf=\"errors\">{{errors}}</div>\n          <div class=\"col-md-4\">    \n            <p>Name: </p> \n            <input type=\"text\" name=\"name\" [(ngModel)]=\"prod.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\" value=\"prod.name\">\n            <p>Photo Source: </p>\n            <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"prod.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\" value=\"prod.photosrc\">\n          </div>\n          <div class=\"col-md-3\">\n            <p>Quantity: </p>\n            <input type=\"number\" name=\"quantity\" [(ngModel)]=\"prod.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\" value=\"prod.quantity\">\n            <p>Price: </p>\n            <input type=\"number\" name=\"price\" [(ngModel)]=\"prod.price\" value=\"0.00\" max=\"1000000\" required min=\"0\" #prodprice=\"ngModel\" value=\"prod.price\">  \n          </div>\n          <div class=\"col-md-5\">\n            <p>Description: </p>\n            <textarea name=\"desc\" [(ngModel)]=\"prod.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\" value=\"prod.desc\"></textarea>  \n            <br>\n              <input type=\"submit\" value=\"Edit product\" class=\"btn btn-sm btn-primary\"/>\n          </div>\n        </form>\n        <button (click)=\"delete(prod)\" class=\"btn btn-sm btn-danger\">Delete</button>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -438,29 +395,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
-var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var EditProdsComponent = /** @class */ (function () {
-    function EditProdsComponent(pServ, uServ) {
+    function EditProdsComponent(pServ) {
         this.pServ = pServ;
-        this.uServ = uServ;
+        this.myEditEvent = new core_1.EventEmitter();
     }
     EditProdsComponent.prototype.ngOnInit = function () {
-        // this.all();
     };
-    // all() {
-    //   this.pServ.all(data=>{
-    //     this.products = data;
-    //   });
-    // }
     EditProdsComponent.prototype.edit = function (prod) {
+        var _this = this;
         this.pServ.update(prod, function (data) {
             if (data.errors) {
                 // this.editProd = { name: this.editProd.name, desc: this.editProd.desc, photosrc: this.editProd.photosrc, quantity: this.editProd.quantity, price: this.editProd.price };
-                // this.errors = data.errors;    
+                _this.errors = data.errors;
                 console.log(data);
             }
             else {
-                // this.all();        
+                _this.myEditEvent.emit(data);
+            }
+        });
+    };
+    EditProdsComponent.prototype.delete = function (prod) {
+        var _this = this;
+        this.pServ.destroy(prod, function (data) {
+            if (data.errors) {
+                _this.errors = data.errors;
+            }
+            else {
+                _this.myEditEvent.emit(data);
             }
         });
     };
@@ -468,13 +430,17 @@ var EditProdsComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], EditProdsComponent.prototype, "AllProds", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], EditProdsComponent.prototype, "myEditEvent", void 0);
     EditProdsComponent = __decorate([
         core_1.Component({
             selector: 'app-edit-prods',
             template: __webpack_require__("./src/app/components/edit-prods/edit-prods.component.html"),
             styles: [__webpack_require__("./src/app/components/edit-prods/edit-prods.component.css")]
         }),
-        __metadata("design:paramtypes", [products_service_1.ProductsService, users_service_1.UsersService])
+        __metadata("design:paramtypes", [products_service_1.ProductsService])
     ], EditProdsComponent);
     return EditProdsComponent;
 }());
@@ -516,9 +482,8 @@ var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var LogregComponent = /** @class */ (function () {
-    function LogregComponent(uServ, route, router) {
+    function LogregComponent(uServ, router) {
         this.uServ = uServ;
-        this.route = route;
         this.router = router;
     }
     LogregComponent.prototype.ngOnInit = function () {
@@ -533,15 +498,14 @@ var LogregComponent = /** @class */ (function () {
             email: "",
             password: ""
         };
+        this.uServ.logout();
     };
     LogregComponent.prototype.register = function () {
         var _this = this;
         this.uServ.register(this.regging, (function (data) {
             if (data.errors) {
-                console.log("12 - data.err", data.errors); // should be user registering or errors
-                for (var x in data.errors) {
-                    _this.regerrs.push(data.errors[x]);
-                }
+                console.log("reg err", data.errors);
+                _this.regerrs = data.errors;
             }
             else {
                 _this.regging = {
@@ -551,12 +515,12 @@ var LogregComponent = /** @class */ (function () {
                     password: "",
                     confirm: ""
                 };
-                if (data.admin) {
-                    // console.log("admin redirect")          
+                localStorage.setItem("userId", data._id);
+                localStorage.setItem("admin", data.admin);
+                if (data.admin == true) {
                     _this.router.navigate(["/admin"]);
                 }
                 else {
-                    // console.log("user redirect")          
                     _this.router.navigate(["/products"]);
                 }
             }
@@ -566,6 +530,7 @@ var LogregComponent = /** @class */ (function () {
         var _this = this;
         this.uServ.login(this.logging, (function (data) {
             if (data.errors) {
+                console.log("log err", data.errors);
                 _this.logerrs = data.errors;
             }
             else {
@@ -573,6 +538,8 @@ var LogregComponent = /** @class */ (function () {
                     email: "",
                     password: ""
                 };
+                localStorage.setItem("userId", data._id);
+                localStorage.setItem("admin", data.admin);
                 if (data.admin == true) {
                     _this.router.navigate(["/admin"]);
                 }
@@ -588,7 +555,7 @@ var LogregComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/logreg/logreg.component.html"),
             styles: [__webpack_require__("./src/app/components/logreg/logreg.component.css")]
         }),
-        __metadata("design:paramtypes", [users_service_1.UsersService, router_1.ActivatedRoute, router_1.Router])
+        __metadata("design:paramtypes", [users_service_1.UsersService, router_1.Router])
     ], LogregComponent);
     return LogregComponent;
 }());
@@ -597,17 +564,101 @@ exports.LogregComponent = LogregComponent;
 
 /***/ }),
 
+/***/ "./src/app/components/new-prod/new-prod.component.css":
+/***/ (function(module, exports) {
+
+module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.prodforms {\r\n    margin: 10px auto;  \r\n}"
+
+/***/ }),
+
+/***/ "./src/app/components/new-prod/new-prod.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n  <h3 class=\"row\">New Product</h3>\n  <div class=\"row\">\n    <div class=\"alert alert-danger\" *ngIf=\"prodname.invalid && prodname.touched\">Name of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"proddesc.invalid && proddesc.touched\">Description of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodsrc.invalid && prodsrc.touched\">Photo source of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodquant.invalid && prodquant.touched\">Maximum product quantity is 300.</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodprice.invalid && prodprice.touched\">Product price required, maximum $1,000,000.00.</div>\n  </div>\n  <div class=\"row prodforms\"> \n    <form (submit)=\"create()\" class=\"form-control form-inline\">\n      <div class=\"col-md-4\">\n        <p>Name: </p> \n        <input type=\"text\" name=\"name\" [(ngModel)]=\"newProd.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\">\n        <p>Photo Source: </p>\n        <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"newProd.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\">\n      </div>\n      <div class=\"col-md-4\">\n        <p>Quantity: </p>\n        <input type=\"number\" name=\"quantity\" [(ngModel)]=\"newProd.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\">\n        <p>Price: </p>\n        <input type=\"number\" name=\"price\" [(ngModel)]=\"newProd.price\" value=\"0\"  required min=\"0\" max=\"1000000\" #prodprice=\"ngModel\">  \n      </div>\n      <div class=\"col-md-4\">\n        <p>Description: </p>\n        <textarea name=\"desc\" [(ngModel)]=\"newProd.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\"></textarea>  \n        <p><input type=\"submit\" value=\"Add product\" class=\"btn btn-sm btn-primary\"></p>    \n      </div>\n    </form>\n  </div> \n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/new-prod/new-prod.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
+var NewProdComponent = /** @class */ (function () {
+    function NewProdComponent(pServ) {
+        this.pServ = pServ;
+        this.myNewEvent = new core_1.EventEmitter();
+    }
+    NewProdComponent.prototype.ngOnInit = function () {
+        this.newProd = {
+            name: "",
+            desc: "",
+            photosrc: "",
+            quantity: 0,
+            price: 0
+        };
+    };
+    NewProdComponent.prototype.create = function () {
+        var _this = this;
+        this.pServ.create(this.newProd, function (data) {
+            if (data.errors) {
+                // this.newProd = { name: this.newProd.name, type: this.newProd.type, desc: this.newProd.desc, skills: this.newProd.skills };
+                _this.errors = data.errors;
+                console.log(data.errors);
+            }
+            else {
+                _this.newProd = {
+                    name: "",
+                    desc: "",
+                    photosrc: "",
+                    quantity: 0,
+                    price: 0
+                };
+                _this.myNewEvent.emit(data);
+            }
+        });
+    };
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], NewProdComponent.prototype, "myNewEvent", void 0);
+    NewProdComponent = __decorate([
+        core_1.Component({
+            selector: 'app-new-prod',
+            template: __webpack_require__("./src/app/components/new-prod/new-prod.component.html"),
+            styles: [__webpack_require__("./src/app/components/new-prod/new-prod.component.css")]
+        }),
+        __metadata("design:paramtypes", [products_service_1.ProductsService])
+    ], NewProdComponent);
+    return NewProdComponent;
+}());
+exports.NewProdComponent = NewProdComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/components/products/products.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".prods {\r\n    margin: 10px auto;\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -ms-flex-wrap: wrap;\r\n        flex-wrap: wrap;\r\n}\r\n.wrapper {\r\n    width: 230px;\r\n    height: 145px;\r\n    margin: 10px 5px;\r\n    display: block;\r\n}\r\nimg {\r\n    opacity: 1;\r\n    display: block;\r\n    width: 230px;\r\n    height: 145px;\r\n    -webkit-transition: .5s ease;\r\n    transition: .5s ease;\r\n    -webkit-backface-visibility: hidden;\r\n            backface-visibility: hidden;\r\n}\r\n.wrapper:hover {\r\n    opacity: 0.3;\r\n}\r\n.prodname {\r\n    opacity: 1;\r\n    font-size: 12px;\r\n    margin: 5px auto; \r\n    text-align: center;\r\n}\r\n.top {\r\n    height: 32px;\r\n    float: right;\r\n    display: block;\r\n}"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\n.prods {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -ms-flex-wrap: wrap;\r\n        flex-wrap: wrap;\r\n}\r\n.wrapper {\r\n    width: 230px;\r\n    height: 145px;\r\n    margin: 10px 10px;\r\n    display: block;\r\n}\r\nimg {\r\n    opacity: 1;\r\n    width: 230px;\r\n    height: 145px;\r\n    -webkit-transition: .5s ease;\r\n    transition: .5s ease;\r\n    -webkit-backface-visibility: hidden;\r\n            backface-visibility: hidden;\r\n}\r\n.wrapper:hover {\r\n    opacity: 0.3;\r\n}\r\n.prodname {\r\n    opacity: 1;\r\n    font-size: 12px;\r\n    margin: 5px auto; \r\n    text-align: center;\r\n}\r\n.scrollie {\r\n    height: 400px;\r\n    overflow: auto;\r\n}\r\n::-webkit-scrollbar {\r\n    display: none;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/products/products.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"top row\">\n  <button (click)=\"cart()\" class=\"btn btn-sm btn-primary\">Your Shopping Cart</button>\n  <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n</div>\n<div class=\"row\">\n<div class=\"prods\">\n  <div *ngFor=\"let prod of products\" style=\"display: float;\">\n    <div class=\"wrapper\">\n      <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"selectprod()\">\n      <div class=\"prodname\">{{prod.name}}</div>\n    </div>\n  </div>\n</div></div>\n<div class=\"selectprod\">\n  <app-singleprod></app-singleprod>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row links\">\n    <div class=\"col-12 d-flex justify-content-end\">    \n      <button (click)=\"cart()\" class=\"btn btn-sm btn-primary\">Your Shopping Cart</button>\n      <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"prods col-md-10 scrollie\">\n      <div *ngFor=\"let prod of products\" class=\"row\">\n        <div class=\"wrapper\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n          <!-- <div class=\"prodname\">{{prod.name}}</div> -->\n        </div> \n      </div>\n    </div>\n    <div *ngIf=\"selectprod\" class=\"col-md-2\">\n      <app-singleprod [userId]=\"userId\" [selected]=\"selected\" (myCartEvent)=\"all()\"></app-singleprod>\n    </div> \n  </div>\n</div>"
 
 /***/ }),
 
@@ -638,24 +689,12 @@ var ProductsComponent = /** @class */ (function () {
         this.uServ = uServ;
     }
     ProductsComponent.prototype.ngOnInit = function () {
-        // if(!this.user) {
-        //   this.session();
-        // }
+        if (!this.uServ.isValid())
+            this.router.navigate(["/"]);
+        // if(this.uServ.isAdmin()) this.router.navigate(["/admin"]);
+        this.userId = this.uServ.session();
+        console.log(this.userId);
         this.all();
-    };
-    ProductsComponent.prototype.session = function () {
-        var _this = this;
-        this.uServ.session(function (data) {
-            if (data == false) {
-                _this.router.navigate(["/"]);
-            }
-            else {
-                _this.user = data;
-            }
-        });
-    };
-    ProductsComponent.prototype.cart = function () {
-        this.router.navigate(["/cart"]);
     };
     ProductsComponent.prototype.all = function () {
         var _this = this;
@@ -663,15 +702,15 @@ var ProductsComponent = /** @class */ (function () {
             _this.products = data;
         });
     };
-    ProductsComponent.prototype.logout = function () {
-        var _this = this;
-        this.uServ.logout(function (data) {
-            if (data == true) {
-                _this.router.navigate(["/"]);
-            }
-        });
+    ProductsComponent.prototype.cart = function () {
+        this.router.navigate(["/cart/" + this.userId]);
     };
-    ProductsComponent.prototype.selectprod = function (id) {
+    ProductsComponent.prototype.logout = function () {
+        this.uServ.logout();
+    };
+    ProductsComponent.prototype.select = function (prod) {
+        this.selectprod = true;
+        this.selected = prod;
     };
     ProductsComponent = __decorate([
         core_1.Component({
@@ -691,14 +730,14 @@ exports.ProductsComponent = ProductsComponent;
 /***/ "./src/app/components/singleprod/singleprod.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "h6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.show {\r\n    margin: 10px auto;\r\n    display: block;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/singleprod/singleprod.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  singleprod works!\n</p>\n"
+module.exports = "<div class=\"row show\">\n  <!-- {{selected | json}} -->\n  <div class=\"thumb\"> <!-- col-md-3 -->\n    <img src=\"{{selected.photosrc}}\" alt=\"Image of {{selected.name}}\" class=\"img-thumbnail\" (click)=\"select(selected)\">\n  </div>\n  <div class=\"\"> <!-- col-md-3 -->\n    <h6>{{selected.name}}</h6>\n    <p>{{selected.desc}}</p>\n  </div>\n  <form (submit)=\"addToCart()\" class=\"form-control\"> <!-- col-md-4 -->\n    <div *ngIf=\"errors\">{{errors}}</div>\n    <p>{{selected.quantity}} in stock</p>\n    <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"1\" required min=\"1\" max=\"{{selected.quantity}}\" #cartProd=\"ngModel\"/>\n    <br><br>\n    <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -718,18 +757,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
+var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var SingleprodComponent = /** @class */ (function () {
-    function SingleprodComponent() {
+    function SingleprodComponent(pServ, uServ) {
+        this.pServ = pServ;
+        this.uServ = uServ;
+        this.myCartEvent = new core_1.EventEmitter();
     }
     SingleprodComponent.prototype.ngOnInit = function () {
+        this.cartProd = {
+            prodId: this.selected._id,
+            // userId: this.userId,
+            quantity: 1
+        };
     };
+    SingleprodComponent.prototype.addToCart = function () {
+        var _this = this;
+        // need quant, pId, &?userId
+        console.log(this.cartProd);
+        this.uServ.addToCart(this.cartProd, function (data) {
+            if (data.errors) {
+                console.log(data);
+            }
+            else {
+                // console.log("edited!");
+                _this.myCartEvent.emit(data);
+            }
+        });
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], SingleprodComponent.prototype, "userId", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], SingleprodComponent.prototype, "selected", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], SingleprodComponent.prototype, "myCartEvent", void 0);
     SingleprodComponent = __decorate([
         core_1.Component({
             selector: 'app-singleprod',
             template: __webpack_require__("./src/app/components/singleprod/singleprod.component.html"),
             styles: [__webpack_require__("./src/app/components/singleprod/singleprod.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [products_service_1.ProductsService, users_service_1.UsersService])
     ], SingleprodComponent);
     return SingleprodComponent;
 }());
@@ -807,9 +882,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var UsersService = /** @class */ (function () {
-    function UsersService(http) {
+    function UsersService(http, router) {
         this.http = http;
+        this.router = router;
     }
     UsersService.prototype.register = function (user, cb) {
         this.http.post("/register", user)
@@ -819,21 +896,31 @@ var UsersService = /** @class */ (function () {
         this.http.post("/login", user)
             .subscribe(function (data) { return cb(data); });
     };
-    UsersService.prototype.session = function (cb) {
-        this.http.get("/session")
-            .subscribe(function (data) { return cb(data); });
+    UsersService.prototype.logout = function () {
+        localStorage.setItem("userId", undefined);
+        localStorage.setItem("admin", undefined);
+        this.router.navigate(["/"]);
     };
-    UsersService.prototype.cart = function (id, cb) {
+    UsersService.prototype.isValid = function () {
+        return localStorage.getItem("userId") != undefined; // returns if T/F if userId exists in session
+    };
+    UsersService.prototype.isAdmin = function () {
+        return localStorage.getItem("admin"); // returns T/F if admin
+    };
+    UsersService.prototype.session = function () {
+        return localStorage.getItem("userId");
+    };
+    UsersService.prototype.find = function (id, cb) {
         this.http.get("/users/" + id)
             .subscribe(function (data) { return cb(data); });
     };
-    UsersService.prototype.logout = function (cb) {
-        this.http.get("/logout")
+    UsersService.prototype.addToCart = function (prod, cb) {
+        this.http.post("/users/" + localStorage.getItem("userId"), prod)
             .subscribe(function (data) { return cb(data); });
     };
     UsersService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        __metadata("design:paramtypes", [http_1.HttpClient, router_1.Router])
     ], UsersService);
     return UsersService;
 }());

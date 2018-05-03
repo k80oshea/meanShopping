@@ -1,3 +1,17 @@
-<p>
-  singleprod works!
-</p>
+<div class="row show">
+  <!-- {{selected | json}} -->
+  <div class="thumb"> <!-- col-md-3 -->
+    <img src="{{selected.photosrc}}" alt="Image of {{selected.name}}" class="img-thumbnail" (click)="select(selected)">
+  </div>
+  <div class=""> <!-- col-md-3 -->
+    <h6>{{selected.name}}</h6>
+    <p>{{selected.desc}}</p>
+  </div>
+  <form (submit)="addToCart()" class="form-control"> <!-- col-md-4 -->
+    <div *ngIf="errors">{{errors}}</div>
+    <p>{{selected.quantity}} in stock</p>
+    <input type="number" name="quantity" [(ngModel)]="cartProd.quantity" value="1" required min="1" max="{{selected.quantity}}" #cartProd="ngModel"/>
+    <br><br>
+    <input type="submit" value="Add to Cart" class="btn btn-sm btn-primary"/>
+  </form>
+</div>

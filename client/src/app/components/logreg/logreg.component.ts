@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class LogregComponent implements OnInit {
   private regerrs: any;
   private logerrs: any;
 
-  constructor(private uServ:UsersService, private route:ActivatedRoute, private router: Router) { 
+  constructor(private uServ:UsersService, private router: Router) { 
 
   }
 
@@ -29,15 +29,14 @@ export class LogregComponent implements OnInit {
       email: "",
       password: ""
     };
+    this.uServ.logout();
   }
 
   register() {
     this.uServ.register(this.regging, (data=> {
       if(data.errors) {
-        console.log("12 - data.err", data.errors); // should be user registering or errors
-        for(let x in data.errors) {
-          this.regerrs.push(data.errors[x]);
-        }
+        console.log("reg err", data.errors);
+        this.regerrs = data.errors;
       }
        else {
         this.regging= {
@@ -47,12 +46,12 @@ export class LogregComponent implements OnInit {
           password: "",
           confirm: ""
         };
-        if(data.admin) {
-          // console.log("admin redirect")          
+        localStorage.setItem("userId", data._id);
+        localStorage.setItem("admin", data.admin);
+        if(data.admin == true) {
           this.router.navigate(["/admin"]); 
         }
         else {
-          // console.log("user redirect")          
           this.router.navigate(["/products"]);
         }
       }
@@ -61,6 +60,7 @@ export class LogregComponent implements OnInit {
   login() {
     this.uServ.login(this.logging, (data=> {
       if(data.errors) {
+        console.log("log err", data.errors);
         this.logerrs = data.errors;
       }
       else {
@@ -68,6 +68,8 @@ export class LogregComponent implements OnInit {
           email: "",
           password: ""
         };
+        localStorage.setItem("userId", data._id);
+        localStorage.setItem("admin", data.admin);
         if(data.admin ==true) {
           this.router.navigate(["/admin"]);
         }

@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-edit-prods',
@@ -8,26 +7,32 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./edit-prods.component.css']
 })
 export class EditProdsComponent implements OnInit {
+  private errors: any;
   @Input() AllProds;
-  constructor(private pServ: ProductsService, private uServ: UsersService) { }
+  @Output() myEditEvent = new EventEmitter();
+  constructor(private pServ: ProductsService) { }
 
   ngOnInit() {
-    // this.all();
   }
-  // all() {
-  //   this.pServ.all(data=>{
-  //     this.products = data;
-  //   });
-  // }
   edit(prod) {
     this.pServ.update(prod, (data)=>{ 
       if(data.errors) {
         // this.editProd = { name: this.editProd.name, desc: this.editProd.desc, photosrc: this.editProd.photosrc, quantity: this.editProd.quantity, price: this.editProd.price };
-        // this.errors = data.errors;    
+        this.errors = data.errors;    
         console.log(data);
       }
       else {
-        // this.all();        
+        this.myEditEvent.emit(data);
+      }
+    });
+  }
+  delete(prod) {
+    this.pServ.destroy(prod, (data)=>{ 
+      if(data.errors) {
+        this.errors = data.errors;    
+      }
+      else {
+        this.myEditEvent.emit(data);
       }
     });
   }

@@ -1,17 +1,18 @@
+.links button {
+    margin: 5px;
+}
 .prods {
-    margin: 10px auto;
     display: flex;
     flex-wrap: wrap;
 }
 .wrapper {
     width: 230px;
     height: 145px;
-    margin: 10px 5px;
+    margin: 10px 10px;
     display: block;
 }
 img {
     opacity: 1;
-    display: block;
     width: 230px;
     height: 145px;
     transition: .5s ease;
@@ -26,8 +27,10 @@ img {
     margin: 5px auto; 
     text-align: center;
 }
-.top {
-    height: 32px;
-    float: right;
-    display: block;
+.scrollie {
+    height: 400px;
+    overflow: auto;
+}
+::-webkit-scrollbar {
+    display: none;
 }

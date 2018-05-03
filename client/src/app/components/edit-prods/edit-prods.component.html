@@ -3,27 +3,32 @@
   <div class="scrollie">
     <div *ngFor="let prod of AllProds">
       <div class="row edits">
-        <form (submit)="edit(product)" class="form-control form-inline">
+        <div class="col-md-3 thumb">
+          <img src="{{prod.photosrc}}" alt="Image of {{prod.name}}" class="img-thumbnail" (click)="select(prod)">
+        </div>
+        <form (submit)="edit(prod)" class="form-control form-inline col-md-8">
+          <div *ngIf="errors">{{errors}}</div>
           <div class="col-md-4">    
             <p>Name: </p> 
-            <input type="text" name="name" [(ngModel)]="product.name" required minlength="3" maxlength="255" #productname="ngModel" value="product.name">
+            <input type="text" name="name" [(ngModel)]="prod.name" required minlength="3" maxlength="255" #prodname="ngModel" value="prod.name">
             <p>Photo Source: </p>
-            <input type="text" name="photosrc" [(ngModel)]="product.photosrc" required minlength="3" maxlength="255" #productsrc="ngModel" value="product.photosrc">
+            <input type="text" name="photosrc" [(ngModel)]="prod.photosrc" required minlength="3" maxlength="255" #prodsrc="ngModel" value="prod.photosrc">
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <p>Quantity: </p>
-            <input type="number" name="quantity" [(ngModel)]="product.quantity" value="0" required min="0" max="300" #productquant="ngModel" value="product.quantity">
+            <input type="number" name="quantity" [(ngModel)]="prod.quantity" value="0" required min="0" max="300" #prodquant="ngModel" value="prod.quantity">
             <p>Price: </p>
-            <input type="number" name="price" [(ngModel)]="product.price" value="0.00" max="1000000" required min="0" #productprice="ngModel" value="product.price">  
+            <input type="number" name="price" [(ngModel)]="prod.price" value="0.00" max="1000000" required min="0" #prodprice="ngModel" value="prod.price">  
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <p>Description: </p>
-            <textarea name="desc" [(ngModel)]="product.desc" required minlength="3" maxlength="255" #productdesc="ngModel" value="product.desc"></textarea>  
+            <textarea name="desc" [(ngModel)]="prod.desc" required minlength="3" maxlength="255" #proddesc="ngModel" value="prod.desc"></textarea>  
             <br>
-            <p><input type="submit" value="Edit product" class="btn btn-sm btn-primary"></p>    
+              <input type="submit" value="Edit product" class="btn btn-sm btn-primary"/>
           </div>
         </form>
-      <!-- </div>
+        <button (click)="delete(prod)" class="btn btn-sm btn-danger">Delete</button>
+      </div>
     </div>
   </div>
-</div> -->
+</div>

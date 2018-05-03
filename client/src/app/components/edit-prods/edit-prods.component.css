@@ -1,0 +1,23 @@
+h3 {
+    font-family: 'Pacifico', cursive; 
+    color: #007bff;
+    margin: 10px 0px;
+}
+.edits {
+    margin: 10px auto;
+}
+.scrollie {
+    height: 400px;
+    overflow: auto;
+}
+img {
+    display: block;
+    width: 230px;
+    height: 145px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.thumb {
+    /* vertical-align: middle; */
+    top: 7px;
+}

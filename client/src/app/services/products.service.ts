@@ -3,7 +3,6 @@ import {HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class ProductsService {
-
   constructor(private http:HttpClient) { 
 
   }
@@ -20,11 +19,12 @@ export class ProductsService {
     .subscribe(data=>cb(data));
   }
   update(prod, cb) {
-    this.http.put("/products/"+prod._id, prod) 
-    .subscribe(data=>cb(data)); 
+    this.http.put("/products/"+prod._id, prod)
+    .subscribe(data=>cb(data));
   } 
   destroy(prod, cb) {
     this.http.delete("/products/"+prod._id)
     .subscribe(data=>cb(data));
   }
+  
 }
