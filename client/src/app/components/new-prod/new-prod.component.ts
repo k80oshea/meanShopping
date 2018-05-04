@@ -18,7 +18,7 @@ export class NewProdComponent implements OnInit {
       name: "",
       desc: "",
       photosrc: "",
-      quantity: 0,
+      inventory: 0,
       price: 0
     };
   }
@@ -34,7 +34,7 @@ export class NewProdComponent implements OnInit {
           name: "",
           desc: "",
           photosrc: "",
-          quantity: 0,
+          inventory: 0,
           price: 0
         };
         this.myNewEvent.emit(data);        

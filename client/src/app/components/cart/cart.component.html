@@ -7,23 +7,28 @@
 <div *ngIf="!cart">
   <p>Your cart is empty!</p>
 </div>
-<div *ngFor="let item of cart">
-  <div class="row">
-    {{item}}
-    <div class="thumb col-md-3"> 
-      <img src="{{item.photosrc}}" alt="Image of {{item.name}}" class="img-thumbnail" (click)="select(item)">
+<div class="row" *ngIf="cart">
+  <div *ngFor="let item of cart" class="col-md-9">
+    <div class="row cartItem">
+      <div class="thumb col-md-4"> 
+        <img src="{{item.photosrc}}" alt="Image of {{item.name}}" class="img-thumbnail" (click)="select(item)">
+      </div>
+      <div class="col-md-6 borders"> 
+        <h6>{{item.name}}</h6>
+        <p>{{item.desc}}</p>
+      <!-- </div> -->
+        <form (submit)="updateCart()" class="form-inline"> 
+          <div *ngIf="errors">{{errors}}</div>
+          <input type="number" name="quantity" [(ngModel)]="cartProd.quantity" value="" required min="0" max="{{item.quantity}}" #cartProd="ngModel"/>
+          <input type="submit" value="Change" class="btn btn-sm btn-primary"/>
+        </form>
+        <button (click)="remove(item)" class="btn btn-sm btn-warning">Remove from cart</button>        
+      </div>
     </div>
-    <div class="col-md-3"> 
-      <h6>{{item.name}}</h6>
-      <p>{{item.desc}}</p>
-    </div>
-    <form (submit)="addToCart()" class="form-control col-md-4"> 
-      <div *ngIf="errors">{{errors}}</div>
-      <p>{{item.quantity}} in stock</p>
-      <input type="number" name="quantity" [(ngModel)]="cartProd.quantity" value="1" required min="1" max="{{item.quantity}}" #cartProd="ngModel"/>
-      <br><br>
-      <input type="submit" value="Add to Cart" class="btn btn-sm btn-primary"/>
-    </form>
-  
+  </div>
+  <div class="col-md-3 borders">
+    <h6>Number of Items: <span>{{cart.length}}</span></h6>
+    <h6>Total: <span>{{total}}</span></h6>
+    <button (click)="buy()" class="btn btn-sm btn-success">Buy</button>
   </div>
 </div>

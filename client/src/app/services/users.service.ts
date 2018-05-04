@@ -30,23 +30,30 @@ export class UsersService {
 		return localStorage.getItem("admin"); // returns T/F if admin
   }
   session() { 
-    console.log("session", localStorage.getItem("userId"))
+    console.log("session service", localStorage.getItem("userId"))
     return localStorage.getItem("userId");
   }
   // session2() { 
   //   this.http.get("/session") 
   //   .subscribe(data=>console.log("why do we have this at all???", data)); 
   // } 
-  addToCart(prod, cb) {
+  addToCart(addProd, cb) {
     let id = localStorage.getItem("userId");
-    console.log("got to the service", id)
-    this.http.post("/users/"+ id, prod)
+    this.http.put("/users/cart/"+ id, addProd)
     .subscribe(data=>cb(data));
   }
   find(id, cb) {
     this.http.get("/users/"+id)
     .subscribe(data=>cb(data));
   }
-
+  purchase(id, cb) {
+    // this.http.put("/users/"+ id)
+    // .subscribe(data=>cb(data));
+  }
+  removeFromCart(prod, cb) {
+    let id = localStorage.getItem("userId");
+    this.http.put("/users/drop/"+ id, prod)
+    .subscribe(data=>cb(data));
+  }
 
 }

@@ -17,7 +17,11 @@ mongoose.model("User", new mongoose.Schema({
         }
     }, 
     admin:{type:Boolean, default:false, required:true},
-    cart:[{ type:ObjectId, ref:"Product" }],
-    history:[{ type:ObjectId, ref:"Product" }]    
+    cart:[
+        {item:{ type:ObjectId, ref:"Product" }, quantity:{type:Number, required:true}}
+    ],
+    history:[ 
+        [{item:{ type:ObjectId, ref:"Product" }, quantity:{type:Number, required:true}}] // array of cart arrays   
+    ]
     }, {timestamps: true} 
 ));

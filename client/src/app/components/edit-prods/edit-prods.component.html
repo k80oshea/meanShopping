@@ -15,8 +15,8 @@
             <input type="text" name="photosrc" [(ngModel)]="prod.photosrc" required minlength="3" maxlength="255" #prodsrc="ngModel" value="prod.photosrc">
           </div>
           <div class="col-md-3">
-            <p>Quantity: </p>
-            <input type="number" name="quantity" [(ngModel)]="prod.quantity" value="0" required min="0" max="300" #prodquant="ngModel" value="prod.quantity">
+            <p># In Inventory: </p>
+            <input type="number" name="inventory" [(ngModel)]="prod.inventory" value="0" required min="0" max="300" #prodquant="ngModel" value="prod.inventory">
             <p>Price: </p>
             <input type="number" name="price" [(ngModel)]="prod.price" value="0.00" max="1000000" required min="0" #prodprice="ngModel" value="prod.price">  
           </div>

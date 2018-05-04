@@ -4,7 +4,7 @@
     <div class="alert alert-danger" *ngIf="prodname.invalid && prodname.touched">Name of product is required and must be between 3 and 255 characters</div>
     <div class="alert alert-danger" *ngIf="proddesc.invalid && proddesc.touched">Description of product is required and must be between 3 and 255 characters</div>
     <div class="alert alert-danger" *ngIf="prodsrc.invalid && prodsrc.touched">Photo source of product is required and must be between 3 and 255 characters</div>
-    <div class="alert alert-danger" *ngIf="prodquant.invalid && prodquant.touched">Maximum product quantity is 300.</div>
+    <div class="alert alert-danger" *ngIf="prodinventory.invalid && prodinventory.touched">Maximum product inventory quantity is 300.</div>
     <div class="alert alert-danger" *ngIf="prodprice.invalid && prodprice.touched">Product price required, maximum $1,000,000.00.</div>
   </div>
   <div class="row prodforms"> 
@@ -16,8 +16,8 @@
         <input type="text" name="photosrc" [(ngModel)]="newProd.photosrc" required minlength="3" maxlength="255" #prodsrc="ngModel">
       </div>
       <div class="col-md-4">
-        <p>Quantity: </p>
-        <input type="number" name="quantity" [(ngModel)]="newProd.quantity" value="0" required min="0" max="300" #prodquant="ngModel">
+        <p># in Inventory: </p>
+        <input type="number" name="inventory" [(ngModel)]="newProd.inventory" value="0" required min="0" max="300" #prodinventory="ngModel">
         <p>Price: </p>
         <input type="number" name="price" [(ngModel)]="newProd.price" value="0"  required min="0" max="1000000" #prodprice="ngModel">  
       </div>

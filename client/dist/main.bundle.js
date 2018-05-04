@@ -294,14 +294,14 @@ exports.BoughtComponent = BoughtComponent;
 /***/ "./src/app/components/cart/cart.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".links button {\r\n    margin: 5px;\r\n}"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/cart/cart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<div *ngIf=\"!cart\">\n  <p>Your cart is empty!</p>\n</div>\n<div *ngFor=\"let item of cart\">\n  <div class=\"row\">\n    {{item}}\n    <div class=\"thumb col-md-3\"> \n      <img src=\"{{item.photosrc}}\" alt=\"Image of {{item.name}}\" class=\"img-thumbnail\" (click)=\"select(item)\">\n    </div>\n    <div class=\"col-md-3\"> \n      <h6>{{item.name}}</h6>\n      <p>{{item.desc}}</p>\n    </div>\n    <form (submit)=\"addToCart()\" class=\"form-control col-md-4\"> \n      <div *ngIf=\"errors\">{{errors}}</div>\n      <p>{{item.quantity}} in stock</p>\n      <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"1\" required min=\"1\" max=\"{{item.quantity}}\" #cartProd=\"ngModel\"/>\n      <br><br>\n      <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n    </form>\n  \n  </div>\n</div>"
+module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<div *ngIf=\"!cart\">\n  <p>Your cart is empty!</p>\n</div>\n<div class=\"row\" *ngIf=\"cart\">\n  <div *ngFor=\"let item of cart\" class=\"col-md-9\">\n    <div class=\"row cartItem\">\n      <div class=\"thumb col-md-4\"> \n        <img src=\"{{item.photosrc}}\" alt=\"Image of {{item.name}}\" class=\"img-thumbnail\" (click)=\"select(item)\">\n      </div>\n      <div class=\"col-md-6 borders\"> \n        <h6>{{item.name}}</h6>\n        <p>{{item.desc}}</p>\n      <!-- </div> -->\n        <form (submit)=\"updateCart()\" class=\"form-inline\"> \n          <div *ngIf=\"errors\">{{errors}}</div>\n          <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"\" required min=\"0\" max=\"{{item.quantity}}\" #cartProd=\"ngModel\"/>\n          <input type=\"submit\" value=\"Change\" class=\"btn btn-sm btn-primary\"/>\n        </form>\n        <button (click)=\"remove(item)\" class=\"btn btn-sm btn-warning\">Remove from cart</button>        \n      </div>\n    </div>\n  </div>\n  <div class=\"col-md-3 borders\">\n    <h6>Number of Items: <span>{{cart.length}}</span></h6>\n    <h6>Total: <span>{{total}}</span></h6>\n    <button (click)=\"buy()\" class=\"btn btn-sm btn-success\">Buy</button>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -347,9 +347,40 @@ var CartComponent = /** @class */ (function () {
     CartComponent.prototype.loadcart = function () {
         var _this = this;
         this.uServ.find(this.userId, function (data) {
-            console.log("this is me???", data);
+            console.log(data);
             _this.cart = data.cart;
             console.log("cart", _this.cart);
+        });
+        for (var _i = 0, _a = this.cart; _i < _a.length; _i++) {
+            var x = _a[_i];
+            this.total += x.price;
+        }
+    };
+    CartComponent.prototype.updateCart = function () {
+        this.loadcart();
+    };
+    CartComponent.prototype.buy = function () {
+        var _this = this;
+        this.uServ.purchase(this.userId, function (data) {
+            if (data.errors) {
+                console.log("comp add err", data);
+            }
+            else {
+                console.log("carted!");
+                _this.router.navigate(["/purchase"]);
+            }
+        });
+    };
+    CartComponent.prototype.remove = function (prod) {
+        var _this = this;
+        this.uServ.removeFromCart(this.userId, function (data) {
+            if (data.errors) {
+                console.log("comp remove err", data);
+            }
+            else {
+                console.log("carted!");
+                _this.loadcart();
+            }
         });
     };
     CartComponent = __decorate([
@@ -377,7 +408,7 @@ module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #
 /***/ "./src/app/components/edit-prods/edit-prods.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <div *ngFor=\"let prod of AllProds\">\n      <div class=\"row edits\">\n        <div class=\"col-md-3 thumb\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n        </div>\n        <form (submit)=\"edit(prod)\" class=\"form-control form-inline col-md-8\">\n          <div *ngIf=\"errors\">{{errors}}</div>\n          <div class=\"col-md-4\">    \n            <p>Name: </p> \n            <input type=\"text\" name=\"name\" [(ngModel)]=\"prod.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\" value=\"prod.name\">\n            <p>Photo Source: </p>\n            <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"prod.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\" value=\"prod.photosrc\">\n          </div>\n          <div class=\"col-md-3\">\n            <p>Quantity: </p>\n            <input type=\"number\" name=\"quantity\" [(ngModel)]=\"prod.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\" value=\"prod.quantity\">\n            <p>Price: </p>\n            <input type=\"number\" name=\"price\" [(ngModel)]=\"prod.price\" value=\"0.00\" max=\"1000000\" required min=\"0\" #prodprice=\"ngModel\" value=\"prod.price\">  \n          </div>\n          <div class=\"col-md-5\">\n            <p>Description: </p>\n            <textarea name=\"desc\" [(ngModel)]=\"prod.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\" value=\"prod.desc\"></textarea>  \n            <br>\n              <input type=\"submit\" value=\"Edit product\" class=\"btn btn-sm btn-primary\"/>\n          </div>\n        </form>\n        <button (click)=\"delete(prod)\" class=\"btn btn-sm btn-danger\">Delete</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div>\n  <h3 class=\"row\">Edit Products</h3>\n  <div class=\"scrollie\">\n    <div *ngFor=\"let prod of AllProds\">\n      <div class=\"row edits\">\n        <div class=\"col-md-3 thumb\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n        </div>\n        <form (submit)=\"edit(prod)\" class=\"form-control form-inline col-md-8\">\n          <div *ngIf=\"errors\">{{errors}}</div>\n          <div class=\"col-md-4\">    \n            <p>Name: </p> \n            <input type=\"text\" name=\"name\" [(ngModel)]=\"prod.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\" value=\"prod.name\">\n            <p>Photo Source: </p>\n            <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"prod.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\" value=\"prod.photosrc\">\n          </div>\n          <div class=\"col-md-3\">\n            <p># In Inventory: </p>\n            <input type=\"number\" name=\"inventory\" [(ngModel)]=\"prod.inventory\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\" value=\"prod.inventory\">\n            <p>Price: </p>\n            <input type=\"number\" name=\"price\" [(ngModel)]=\"prod.price\" value=\"0.00\" max=\"1000000\" required min=\"0\" #prodprice=\"ngModel\" value=\"prod.price\">  \n          </div>\n          <div class=\"col-md-5\">\n            <p>Description: </p>\n            <textarea name=\"desc\" [(ngModel)]=\"prod.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\" value=\"prod.desc\"></textarea>  \n            <br>\n              <input type=\"submit\" value=\"Edit product\" class=\"btn btn-sm btn-primary\"/>\n          </div>\n        </form>\n        <button (click)=\"delete(prod)\" class=\"btn btn-sm btn-danger\">Delete</button>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -577,7 +608,7 @@ module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #
 /***/ "./src/app/components/new-prod/new-prod.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h3 class=\"row\">New Product</h3>\n  <div class=\"row\">\n    <div class=\"alert alert-danger\" *ngIf=\"prodname.invalid && prodname.touched\">Name of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"proddesc.invalid && proddesc.touched\">Description of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodsrc.invalid && prodsrc.touched\">Photo source of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodquant.invalid && prodquant.touched\">Maximum product quantity is 300.</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodprice.invalid && prodprice.touched\">Product price required, maximum $1,000,000.00.</div>\n  </div>\n  <div class=\"row prodforms\"> \n    <form (submit)=\"create()\" class=\"form-control form-inline\">\n      <div class=\"col-md-4\">\n        <p>Name: </p> \n        <input type=\"text\" name=\"name\" [(ngModel)]=\"newProd.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\">\n        <p>Photo Source: </p>\n        <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"newProd.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\">\n      </div>\n      <div class=\"col-md-4\">\n        <p>Quantity: </p>\n        <input type=\"number\" name=\"quantity\" [(ngModel)]=\"newProd.quantity\" value=\"0\" required min=\"0\" max=\"300\" #prodquant=\"ngModel\">\n        <p>Price: </p>\n        <input type=\"number\" name=\"price\" [(ngModel)]=\"newProd.price\" value=\"0\"  required min=\"0\" max=\"1000000\" #prodprice=\"ngModel\">  \n      </div>\n      <div class=\"col-md-4\">\n        <p>Description: </p>\n        <textarea name=\"desc\" [(ngModel)]=\"newProd.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\"></textarea>  \n        <p><input type=\"submit\" value=\"Add product\" class=\"btn btn-sm btn-primary\"></p>    \n      </div>\n    </form>\n  </div> \n</div>\n"
+module.exports = "<div>\n  <h3 class=\"row\">New Product</h3>\n  <div class=\"row\">\n    <div class=\"alert alert-danger\" *ngIf=\"prodname.invalid && prodname.touched\">Name of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"proddesc.invalid && proddesc.touched\">Description of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodsrc.invalid && prodsrc.touched\">Photo source of product is required and must be between 3 and 255 characters</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodinventory.invalid && prodinventory.touched\">Maximum product inventory quantity is 300.</div>\n    <div class=\"alert alert-danger\" *ngIf=\"prodprice.invalid && prodprice.touched\">Product price required, maximum $1,000,000.00.</div>\n  </div>\n  <div class=\"row prodforms\"> \n    <form (submit)=\"create()\" class=\"form-control form-inline\">\n      <div class=\"col-md-4\">\n        <p>Name: </p> \n        <input type=\"text\" name=\"name\" [(ngModel)]=\"newProd.name\" required minlength=\"3\" maxlength=\"255\" #prodname=\"ngModel\">\n        <p>Photo Source: </p>\n        <input type=\"text\" name=\"photosrc\" [(ngModel)]=\"newProd.photosrc\" required minlength=\"3\" maxlength=\"255\" #prodsrc=\"ngModel\">\n      </div>\n      <div class=\"col-md-4\">\n        <p># in Inventory: </p>\n        <input type=\"number\" name=\"inventory\" [(ngModel)]=\"newProd.inventory\" value=\"0\" required min=\"0\" max=\"300\" #prodinventory=\"ngModel\">\n        <p>Price: </p>\n        <input type=\"number\" name=\"price\" [(ngModel)]=\"newProd.price\" value=\"0\"  required min=\"0\" max=\"1000000\" #prodprice=\"ngModel\">  \n      </div>\n      <div class=\"col-md-4\">\n        <p>Description: </p>\n        <textarea name=\"desc\" [(ngModel)]=\"newProd.desc\" required minlength=\"3\" maxlength=\"255\" #proddesc=\"ngModel\"></textarea>  \n        <p><input type=\"submit\" value=\"Add product\" class=\"btn btn-sm btn-primary\"></p>    \n      </div>\n    </form>\n  </div> \n</div>\n"
 
 /***/ }),
 
@@ -608,7 +639,7 @@ var NewProdComponent = /** @class */ (function () {
             name: "",
             desc: "",
             photosrc: "",
-            quantity: 0,
+            inventory: 0,
             price: 0
         };
     };
@@ -625,7 +656,7 @@ var NewProdComponent = /** @class */ (function () {
                     name: "",
                     desc: "",
                     photosrc: "",
-                    quantity: 0,
+                    inventory: 0,
                     price: 0
                 };
                 _this.myNewEvent.emit(data);
@@ -661,7 +692,7 @@ module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\n.prods {\r\n    di
 /***/ "./src/app/components/products/products.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row links\">\n    <div class=\"col-12 d-flex justify-content-end\">    \n      <button (click)=\"cart()\" class=\"btn btn-sm btn-primary\">Your Shopping Cart</button>\n      <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"prods col-md-10 scrollie\">\n      <div *ngFor=\"let prod of products\" class=\"row\">\n        <div class=\"wrapper\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n          <!-- <div class=\"prodname\">{{prod.name}}</div> -->\n        </div> \n      </div>\n    </div>\n    <div *ngIf=\"selectprod\" class=\"col-md-2\">\n      <app-singleprod [userId]=\"userId\" [selected]=\"selected\" (myCartEvent)=\"all()\"></app-singleprod>\n    </div> \n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"row links\">\n    <div class=\"col-12 d-flex justify-content-end\">    \n      <button (click)=\"cart()\" class=\"btn btn-sm btn-primary\">Your Shopping Cart</button>\n      <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"prods col-md-10 scrollie\">\n      <div *ngFor=\"let prod of products\" class=\"row\">\n        <div class=\"wrapper\">\n          <img src=\"{{prod.photosrc}}\" alt=\"Image of {{prod.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n          <!-- <div class=\"prodname\">{{prod.name}}</div> -->\n        </div> \n      </div>\n    </div>\n    <div *ngIf=\"selectprod\" class=\"col-md-2\">\n      <app-singleprod [userId]=\"userId\" [selected]=\"selected\" (myCartEvent)=\"all()\" (myCart2Event)=\"unselect()\"></app-singleprod>\n    </div> \n    <div *ngIf=\"!selectprod && bought\" class=\"col-md-2\">\n      <div class=\"alert alert-success small\">Successfully added to cart!</div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -698,6 +729,7 @@ var ProductsComponent = /** @class */ (function () {
         this.userId = this.uServ.session();
         // console.log(this.userId)
         this.all();
+        this.bought = false;
     };
     ProductsComponent.prototype.all = function () {
         var _this = this;
@@ -713,7 +745,17 @@ var ProductsComponent = /** @class */ (function () {
     };
     ProductsComponent.prototype.select = function (prod) {
         this.selectprod = true;
+        this.bought = false;
         this.selected = prod;
+    };
+    ProductsComponent.prototype.unselect = function () {
+        this.selectprod = false;
+        this.bought = true;
+    };
+    ProductsComponent.prototype.ngOnDestroy = function () {
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        this.bought = false;
     };
     ProductsComponent = __decorate([
         core_1.Component({
@@ -740,7 +782,7 @@ module.exports = "h6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #
 /***/ "./src/app/components/singleprod/singleprod.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row show\">\n  <div class=\"thumb\">\n    <img src=\"{{selected.photosrc}}\" alt=\"Image of {{selected.name}}\" class=\"img-thumbnail\" (click)=\"select(selected)\">\n  </div>\n  <div>\n    <h6>{{selected.name}}</h6>\n    <p>{{selected.desc}}</p>\n  </div>\n  <form (submit)=\"addToCart(cartProd)\" class=\"form-control\">\n    <div *ngIf=\"errors\">{{errors}}</div>\n    <p>{{selected.quantity}} in stock</p>\n    <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"1\" required min=\"1\" max=\"{{selected.quantity}}\" #cartProd=\"ngModel\"/>\n    <br><br>\n    <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n  </form>\n</div>\n{{cartProd.quantity}}\n"
+module.exports = "<div class=\"row show\">\n  <div class=\"thumb\">\n    <img src=\"{{selected.photosrc}}\" alt=\"Image of {{selected.name}}\" class=\"img-thumbnail\" (click)=\"select(selected)\">\n  </div>\n  <div>\n    <h6>{{selected.name}}</h6>\n    <p>{{selected.desc}}</p>\n  </div>\n  <form (submit)=\"addToCart(addProd)\" class=\"form-control\">\n    <div *ngIf=\"errors\">{{errors}}</div>\n    <p>{{selected.inventory}} in stock</p>\n    <input type=\"number\" name=\"quantity\" [(ngModel)]=\"addProd.quantity\" value=\"1\" required min=\"1\" max=\"{{selected.inventory}}\" #addProd=\"ngModel\"/>\n    <br><br>\n    <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n  </form>\n</div>\n{{addProd.quantity}}"
 
 /***/ }),
 
@@ -763,29 +805,29 @@ var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
 var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var SingleprodComponent = /** @class */ (function () {
-    // private newProd: any;
     function SingleprodComponent(pServ, uServ) {
         this.pServ = pServ;
         this.uServ = uServ;
         this.myCartEvent = new core_1.EventEmitter();
+        this.myCart2Event = new core_1.EventEmitter();
     }
     SingleprodComponent.prototype.ngOnInit = function () {
-        this.cartProd = {
+        this.addProd = {
             prodId: this.selected._id,
             quantity: 1
         };
     };
     SingleprodComponent.prototype.addToCart = function () {
         var _this = this;
-        // console.log("singleprod 1", prod)    
-        console.log("add to cart", this.cartProd);
-        this.uServ.addToCart(this.cartProd, function (data) {
+        console.log("add to cart", this.addProd);
+        this.uServ.addToCart(this.addProd, function (data) {
             if (data.errors) {
                 console.log("comp add err", data);
             }
             else {
                 console.log("carted!");
                 _this.myCartEvent.emit(data);
+                _this.myCart2Event.emit(data);
             }
         });
     };
@@ -801,6 +843,10 @@ var SingleprodComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", Object)
     ], SingleprodComponent.prototype, "myCartEvent", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], SingleprodComponent.prototype, "myCart2Event", void 0);
     SingleprodComponent = __decorate([
         core_1.Component({
             selector: 'app-singleprod',
@@ -913,21 +959,29 @@ var UsersService = /** @class */ (function () {
         return localStorage.getItem("admin"); // returns T/F if admin
     };
     UsersService.prototype.session = function () {
-        console.log("session", localStorage.getItem("userId"));
+        console.log("session service", localStorage.getItem("userId"));
         return localStorage.getItem("userId");
     };
     // session2() { 
     //   this.http.get("/session") 
     //   .subscribe(data=>console.log("why do we have this at all???", data)); 
     // } 
-    UsersService.prototype.addToCart = function (prod, cb) {
+    UsersService.prototype.addToCart = function (addProd, cb) {
         var id = localStorage.getItem("userId");
-        console.log("got to the service", id);
-        this.http.post("/users/" + id, prod)
+        this.http.put("/users/cart/" + id, addProd)
             .subscribe(function (data) { return cb(data); });
     };
     UsersService.prototype.find = function (id, cb) {
         this.http.get("/users/" + id)
+            .subscribe(function (data) { return cb(data); });
+    };
+    UsersService.prototype.purchase = function (id, cb) {
+        // this.http.put("/users/"+ id)
+        // .subscribe(data=>cb(data));
+    };
+    UsersService.prototype.removeFromCart = function (prod, cb) {
+        var id = localStorage.getItem("userId");
+        this.http.put("/users/drop/" + id, prod)
             .subscribe(function (data) { return cb(data); });
     };
     UsersService = __decorate([

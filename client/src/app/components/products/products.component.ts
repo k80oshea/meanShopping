@@ -13,6 +13,7 @@ export class ProductsComponent implements OnInit {
   private userId: any;
   private selectprod: any;
   private selected: any;
+  private bought: any;
 
   constructor(private route:ActivatedRoute, private router: Router, private pServ: ProductsService, private uServ:UsersService) { }
 
@@ -22,9 +23,10 @@ export class ProductsComponent implements OnInit {
     this.userId = this.uServ.session();
     // console.log(this.userId)
     this.all();
+    this.bought = false;
   }
   all() {
-    this.pServ.all(data=>{
+    this.pServ.all(data=> {
       this.products = data;
     });
   }
@@ -36,6 +38,16 @@ export class ProductsComponent implements OnInit {
   }
   select(prod) {
     this.selectprod = true;
+    this.bought = false;
     this.selected = prod;  
+  }
+  unselect() {
+    this.selectprod = false;
+    this.bought = true;
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.bought = false;    
   }
 }

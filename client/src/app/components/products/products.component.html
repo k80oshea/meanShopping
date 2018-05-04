@@ -15,7 +15,10 @@
       </div>
     </div>
     <div *ngIf="selectprod" class="col-md-2">
-      <app-singleprod [userId]="userId" [selected]="selected" (myCartEvent)="all()"></app-singleprod>
+      <app-singleprod [userId]="userId" [selected]="selected" (myCartEvent)="all()" (myCart2Event)="unselect()"></app-singleprod>
     </div> 
+    <div *ngIf="!selectprod && bought" class="col-md-2">
+      <div class="alert alert-success small">Successfully added to cart!</div>
+    </div>
   </div>
 </div>

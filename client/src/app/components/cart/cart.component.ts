@@ -9,7 +9,10 @@ import { UsersService } from '../../services/users.service';
 })
 export class CartComponent implements OnInit {
   private userId: any;
+  private cartIds: any;  
   private cart: any;
+  private total: any;
+
   constructor(private route:ActivatedRoute, private router: Router, private pServ: ProductsService, private uServ:UsersService) { }
 
   ngOnInit() {
@@ -25,10 +28,39 @@ export class CartComponent implements OnInit {
     this.uServ.logout();
   }
   loadcart() {
-    this.uServ.find(this.userId, data=>{
-      console.log("this is me???", data)
+    this.uServ.find(this.userId, data=> {
+      console.log(data)
       this.cart = data.cart;
       console.log("cart", this.cart)
+    });
+    for(let x of this.cart) {
+      this.total += x.price;
+    }
+  }
+  updateCart() {
+
+    this.loadcart();
+  }
+  buy() {
+    this.uServ.purchase(this.userId, (data)=>{ 
+      if(data.errors) {
+        console.log("comp add err", data);
+      }
+      else {
+        console.log("carted!");
+        this.router.navigate(["/purchase"]);
+      }
+    });
+  }
+  remove(prod) {
+    this.uServ.removeFromCart(this.userId, (data)=>{ 
+      if(data.errors) {
+        console.log("comp remove err", data);
+      }
+      else {
+        console.log("carted!");
+        this.loadcart();
+      }
     });
   }
 }
