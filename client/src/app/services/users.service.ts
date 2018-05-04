@@ -22,22 +22,31 @@ export class UsersService {
   } 
 
   isValid() {
+    // console.log("isvalid", (localStorage.getItem("userId") != undefined))
 		return localStorage.getItem("userId") != undefined; // returns if T/F if userId exists in session
   }
   isAdmin() {
+    // console.log("isadmin", localStorage.getItem("admin"))
 		return localStorage.getItem("admin"); // returns T/F if admin
   }
   session() { 
+    console.log("session", localStorage.getItem("userId"))
     return localStorage.getItem("userId");
   }
-
+  // session2() { 
+  //   this.http.get("/session") 
+  //   .subscribe(data=>console.log("why do we have this at all???", data)); 
+  // } 
+  addToCart(prod, cb) {
+    let id = localStorage.getItem("userId");
+    console.log("got to the service", id)
+    this.http.post("/users/"+ id, prod)
+    .subscribe(data=>cb(data));
+  }
   find(id, cb) {
     this.http.get("/users/"+id)
     .subscribe(data=>cb(data));
   }
 
-  addToCart(prod, cb) {
-    this.http.post("/users/"+ localStorage.getItem("userId"), prod)
-    .subscribe(data=>cb(data));    
-  }
+
 }

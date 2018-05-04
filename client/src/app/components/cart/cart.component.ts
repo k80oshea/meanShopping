@@ -9,20 +9,26 @@ import { UsersService } from '../../services/users.service';
 })
 export class CartComponent implements OnInit {
   private userId: any;
-
+  private cart: any;
   constructor(private route:ActivatedRoute, private router: Router, private pServ: ProductsService, private uServ:UsersService) { }
 
   ngOnInit() {
     if(!this.uServ.isValid()) this.router.navigate(["/"]);
     // if(this.uServ.isAdmin()) this.router.navigate(["/admin"]);
     this.userId = this.uServ.session();
-    this.cart();
+    this.loadcart();
   }
-   // this.route.params.subscribe((params: Params) => this.petId = params['id']);
-   cart() {
+  browse() {
+    this.router.navigate(["/browse"]);    
+  } 
+  logout() {
+    this.uServ.logout();
+  }
+  loadcart() {
     this.uServ.find(this.userId, data=>{
+      console.log("this is me???", data)
       this.cart = data.cart;
-      console.log(this.cart)
+      console.log("cart", this.cart)
     });
   }
 }

@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit {
     if(!this.uServ.isValid()) this.router.navigate(["/"]);
     // if(this.uServ.isAdmin()) this.router.navigate(["/admin"]);
     this.userId = this.uServ.session();
-    console.log(this.userId)
+    // console.log(this.userId)
     this.all();
   }
   all() {

@@ -11,27 +11,27 @@ export class SingleprodComponent implements OnInit {
   @Input() userId;
   @Input() selected;  
   @Output() myCartEvent = new EventEmitter();
-
   private cartProd: any; 
+  // private newProd: any;
 
   constructor(private pServ: ProductsService, private uServ: UsersService) { }
 
   ngOnInit() {
     this.cartProd = { 
       prodId: this.selected._id,
-      // userId: this.userId,
       quantity: 1
     };
+
   }
   addToCart() {
-    // need quant, pId, &?userId
-    console.log(this.cartProd)
+    // console.log("singleprod 1", prod)    
+    console.log("add to cart", this.cartProd)
     this.uServ.addToCart(this.cartProd, (data)=>{ 
       if(data.errors) {
-        console.log(data);
+        console.log("comp add err", data);
       }
       else {
-        // console.log("edited!");
+        console.log("carted!");
         this.myCartEvent.emit(data);
       }
     });

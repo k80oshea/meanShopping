@@ -1,0 +1,46 @@
+as of 5/3/18
+use hmstore
+switched to db hmstore
+db.users.find().pretty()
+{
+        "_id" : ObjectId("5ae76b2abf89152b6cc26714"),
+        "admin" : true,
+        "cart" : null,
+        "history" : null,
+        "first" : "Key",
+        "last" : "Houck",
+        "email" : "admin@gmail.com",
+        "password" : "$2a$10$8EMfZp.MKjfp4P5D5JjD1OpoofLd307GwHup6e4Qmh3Tt1Vr/aEwW",
+        "createdAt" : ISODate("2018-04-30T19:14:51.500Z"),
+        "updatedAt" : ISODate("2018-04-30T19:14:51.500Z"),
+        "__v" : 0
+}
+{
+        "_id" : ObjectId("5ae88ad915169104d4f879c8"),
+        "admin" : false,
+        "cart" : [ ],
+        "history" : [ ],
+        "first" : "Katie",
+        "last" : "O'Shea",
+        "email" : "katie@gmail.com",
+        "password" : "$2a$10$jc3/ZfqhqOc.EpEJbnLNi.K61S9IoCwWU.wX5vJamq75OtfPrv0eC",
+        "createdAt" : ISODate("2018-05-01T15:42:18.510Z"),
+        "updatedAt" : ISODate("2018-05-01T15:42:18.510Z"),
+        "__v" : 0
+}
+{
+        "_id" : ObjectId("5aeb5e8773e80f2728af9019"),
+        "admin" : false,
+        "cart" : [
+                ObjectId("5ae8b9790a739c3a6409c6ca"),
+                ObjectId("5ae8b9790a739c3a6409c6ca")
+        ],
+        "history" : [ ],
+        "first" : "Caroline",
+        "last" : "O'Shea",
+        "email" : "caro@gmail.com",
+        "password" : "$2a$10$RUEQ2EpCYChiR2gjGWodbe.X9b2LsMl5ihU1NSLTdVvpduqrzYzYi",
+        "createdAt" : ISODate("2018-05-03T19:09:59.822Z"),
+        "updatedAt" : ISODate("2018-05-03T20:09:14.849Z"),
+        "__v" : 1
+}

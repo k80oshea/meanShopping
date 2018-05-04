@@ -1,6 +1,29 @@
-<p>
-  cart works!
-</p>
-<ul *ngFor="let item of cart">
-  <li>{{item}}</li>
-</ul>
+<div class="row links">
+  <div class="col-12 d-flex justify-content-end">    
+    <button (click)="browse()" class="btn btn-sm btn-primary">Browse</button>
+    <button (click)="logout()" class="btn btn-sm btn-primary">Logout</button>
+  </div>
+</div>
+<div *ngIf="!cart">
+  <p>Your cart is empty!</p>
+</div>
+<div *ngFor="let item of cart">
+  <div class="row">
+    {{item}}
+    <div class="thumb col-md-3"> 
+      <img src="{{item.photosrc}}" alt="Image of {{item.name}}" class="img-thumbnail" (click)="select(item)">
+    </div>
+    <div class="col-md-3"> 
+      <h6>{{item.name}}</h6>
+      <p>{{item.desc}}</p>
+    </div>
+    <form (submit)="addToCart()" class="form-control col-md-4"> 
+      <div *ngIf="errors">{{errors}}</div>
+      <p>{{item.quantity}} in stock</p>
+      <input type="number" name="quantity" [(ngModel)]="cartProd.quantity" value="1" required min="1" max="{{item.quantity}}" #cartProd="ngModel"/>
+      <br><br>
+      <input type="submit" value="Add to Cart" class="btn btn-sm btn-primary"/>
+    </form>
+  
+  </div>
+</div>

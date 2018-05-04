@@ -25,10 +25,7 @@ export class AdminComponent implements OnInit {
     this.pServ.all(data=>{
       this.products = data;
     });
-  }
-  browse() {
-    this.router.navigate(["/browse"]);    
-  }  
+  } 
   logout() {
     this.uServ.logout();
   }

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: "", pathMatch: 'full', component: LogregComponent },
   { path: "admin", pathMatch: 'full', component: AdminComponent },
   { path: "browse", pathMatch: 'full', component: ProductsComponent },
-  { path: "cart", pathMatch: 'full', component: CartComponent },
+  { path: "cart/:id", pathMatch: 'full', component: CartComponent },
   { path: "purchase", pathMatch: 'full', component: BoughtComponent },
   { path: "**", redirectTo: '' }
 ];

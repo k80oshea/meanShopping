@@ -72,92 +72,129 @@ class UserController{
             }
         })
     }
-    session(req, res) {
-        if(req.session.userId) {
-            User.findOne({_id:req.session.userId})
-            .populate({
-                model:"Product",
-                path:"cart"
-            })
-            .exec((err, user)=> {
-                if(err) {
-                    res.json(false);
-                }
-                else{
-                    res.json(user);
-                }
-            })
-        }
-        else {
-            res.json(false);
-        }
-    }
+    // session(req, res) {
+    //     console.log("am i even getting here??", req.session.userId);
+    //     if(req.session.userId) {
+    //         User.findOne({_id:req.session.userId})
+    //         .populate({
+    //             model:"Product",
+    //             path:"cart"
+    //         })
+    //         .exec((err, user)=> {
+    //             if(err) {
+    //                 res.json(false);
+    //             }
+    //             else{
+    //                 res.json(user);
+    //             }
+    //         })
+    //     }
+    //     else {
+    //         res.json(false);
+    //     }
+    // }
     logout(req, res) {
         req.session.userId = null;
         res.json(true)
     }
     cart(req, res) { 
-        console.log(req.body)
-        User.find({_id:req.params.id})
-        .populate({
-            model:"Product",
-            path:"cart"
-        })
-        .exec((err, user)=> {
+        console.log("ctrller", req.body) // ctrller { prodId: '5ae7919c6698cb21f49e2fa6', quantity: 1 }
+        Product.findOne({_id: req.body.prodId}, (err, prod)=> {
             if(err) {
-                res.json({errors: "Failed to lookup user."});
+                res.json({errors: "Could not find product"});                    
             }
             else {
-                console.log("adding things", req.body)
-                // push prod id and quantity as tuple? 
-                // delete prod from "inventory" on product
-                // user.cart.push(req.body)
-                // Product.findOne({_id: req.params.id}, (err, prod)=> {
-                //     if(err) {
-                //         res.json({errors: err});                    
-                //     }
-                //     else {
-                //         prod.quantity = req.body.quantity || prod.quantity;
-                //         prod.save(function(err) {
-                //             if(err) {
-                //                 res.json({errors: err});
-                //             }
-                //             else {
-                //                 res.json(prod);
-                //             }
-                //         })
-                //     }
-                // })
-                user.save(function(err) {
+                prod.quantity = prod.quantity - req.body.quantity;
+                // does this rewrite the whole thing...?
+                prod.save(function(err) {
                     if(err) {
-                        res.json({errors: "Could not add to cart"});
+                        res.json({errors: "Unable to update product"});
                     }
                     else {
-                        res.json(user);
+                        console.log("inventory updated", prod);
+                        // res.json(prod);
+                        // User.find({_id:req.params.id})
+                        // .populate({
+                        //     model:"Product",
+                        //     path:"cart"
+                        // })
+                        // .exec((err, user)=> {
+                        User.findOne({_id:req.params.id}, (err, user)=> {
+                            if(err) {
+                                res.json({errors: "Failed to lookup user."});
+                            }
+                            else {
+                                // console.log(user);
+                                // console.log("adding things", req.body); // adding things { prodId: '5ae7919c6698cb21f49e2fa6', quantity: 1 }
+                            // push prod id and quantity as tuple? 
+                                let want = req.body.quantity;
+                                if(user.cart == undefined) {
+                                    user.cart = [];
+                                    // console.log("hello!")
+                                }
+                                while(want > 0) { // pushes prodId # times added from inventory
+                                    // console.log(want);
+                                    // console.log("the cart is", user.cart);
+                                    user.cart.push(prod);
+                                    // user.cart.push(prod);
+                                    // user.cart += req.body.prodId;
+                                    want--;
+                                    // console.log("the cart is now", user.cart);
+                                }
+                                console.log("final cart", user.cart);   
+                                user.save(err=> {
+                                    if(err) {
+                                        res.json({errors: "Could not save user"});
+                                    }
+                                    else {
+                                        console.log("product and usercart saved!!", user.cart);
+                                        res.json({user, success: "Succesfully added to cart!"});
+                                    }
+                        })
                     }
                 })
             }
         })
+
+        
+
+            // delete prod from "inventory" on product
+            }
+        })
     }
-    show(req, res) {
-        if(req.session.id) {
-            User.findOne({_id:req.session.id})
-            .populate({
-                model:"Product",
-                path:"Cart"
-            })
-            .exec((err, user)=> {
-                if(user) {
-                    res.json(user);
-                }
-                else{
-                    res.json({errors: err});
-                }
-            })
-        }
-        else {
-            res.json(false);
-        }
+    find(req, res) {
+        User.findOne({id: req.params.id}
+        .populate({
+            model:"Product",
+            path:"Cart"
+        })
+        .exec((err, user)=> {
+            if(err) {
+                res.json({errors: "Could not find user"});
+            }
+            else {
+                res.json(user);
+            }
+        
+        }));
+        // if(req.session.id) {
+        //     User.findOne({_id:req.session.id})
+        //     .populate({
+        //         model:"Product",
+        //         path:"Cart"
+        //     })
+        //     .exec((err, user)=> {
+        //         if(user) {
+        //             res.json(user);
+        //         }
+        //         else{
+        //             res.json({errors: err});
+        //         }
+        //     })
+        // }
+        // else {
+        //     res.json(false);
+        // }
     }
     // destroy(req, res) {
     //     User.findOne({_id: req.session._id}, (err, user)=> { 

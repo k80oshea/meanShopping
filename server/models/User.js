@@ -2,9 +2,9 @@ let mongoose = require('mongoose');
 let ObjectId = mongoose.Schema.Types.ObjectId;
 
 mongoose.model("User", new mongoose.Schema({
-    first:{type:String, required:true, minlength:3, maxlength:255}, 
-    last:{type:String, required:true, minlength:3, maxlength:255}, 
-    email:{type:String, required:true, minlength:3, maxlength:255}, 
+    first: {type:String, required:true, minlength:3, maxlength:255}, 
+    last: {type:String, required:true, minlength:3, maxlength:255}, 
+    email: {type:String, required:true, minlength:3, maxlength:255}, 
     password: {
         type: String,
         required: true,
