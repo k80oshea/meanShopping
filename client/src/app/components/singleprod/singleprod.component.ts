@@ -12,7 +12,10 @@ export class SingleprodComponent implements OnInit {
   @Input() selected;  
   @Output() myCartEvent = new EventEmitter();
   @Output() myCart2Event = new EventEmitter();
-  private addProd: any; 
+  private addProd: any = { 
+    prodId: 0,
+    quantity: 1
+  }; 
 
   constructor(private pServ: ProductsService, private uServ: UsersService) { }
 
@@ -23,8 +26,12 @@ export class SingleprodComponent implements OnInit {
     };
 
   }
-  addToCart() {
-    console.log("add to cart", this.addProd)
+  addToCart(buying) {
+    // console.log("add to cart buying", buying)
+    // console.log("add to cart quant", buying.quantity)
+    this.addProd.quantity = buying.quantity;  
+    console.log("add to cart addprod", this.addProd)
+    // console.log("the item", this.selected._id)
     this.uServ.addToCart(this.addProd, (data)=>{ 
       if(data.errors) {
         console.log("comp add err", data);

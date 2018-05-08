@@ -13,3 +13,9 @@ h6 {
     border: 1px solid #ced4da;
     border-radius: .25rem;
 }
+.subtotal {
+    height: 125px;
+}
+button {
+    margin: 10px 0px;
+}

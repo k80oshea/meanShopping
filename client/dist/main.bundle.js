@@ -244,14 +244,14 @@ exports.AdminComponent = AdminComponent;
 /***/ "./src/app/components/bought/bought.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh4 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}"
 
 /***/ }),
 
 /***/ "./src/app/components/bought/bought.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  bought works!\n</p>\n"
+module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<h4>Purchase successful!</h4>\n<!-- <p> Click here to see your purchase history </p> -->\n<button (click)=\"browse\" class=\"btn btn-sm btn-primary\">Continue Shopping</button>\n"
 
 /***/ }),
 
@@ -271,10 +271,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var products_service_1 = __webpack_require__("./src/app/services/products.service.ts");
+var users_service_1 = __webpack_require__("./src/app/services/users.service.ts");
 var BoughtComponent = /** @class */ (function () {
-    function BoughtComponent() {
+    function BoughtComponent(route, router, pServ, uServ) {
+        this.route = route;
+        this.router = router;
+        this.pServ = pServ;
+        this.uServ = uServ;
     }
     BoughtComponent.prototype.ngOnInit = function () {
+        if (!this.uServ.isValid())
+            this.router.navigate(["/"]);
+        this.userId = this.uServ.session();
+    };
+    BoughtComponent.prototype.browse = function () {
+        this.router.navigate(["/browse"]);
+    };
+    BoughtComponent.prototype.logout = function () {
+        this.uServ.logout();
     };
     BoughtComponent = __decorate([
         core_1.Component({
@@ -282,7 +298,7 @@ var BoughtComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/bought/bought.component.html"),
             styles: [__webpack_require__("./src/app/components/bought/bought.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, products_service_1.ProductsService, users_service_1.UsersService])
     ], BoughtComponent);
     return BoughtComponent;
 }());
@@ -294,14 +310,14 @@ exports.BoughtComponent = BoughtComponent;
 /***/ "./src/app/components/cart/cart.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}\r\n.subtotal {\r\n    height: 125px;\r\n}\r\nbutton {\r\n    margin: 10px 0px;\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/components/cart/cart.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<div *ngIf=\"!cart\">\n  <p>Your cart is empty!</p>\n</div>\n<div class=\"row\" *ngIf=\"cart\">\n  <div *ngFor=\"let item of cart\" class=\"col-md-9\">\n    <div class=\"row cartItem\">\n      <div class=\"thumb col-md-4\"> \n        <img src=\"{{item.photosrc}}\" alt=\"Image of {{item.name}}\" class=\"img-thumbnail\" (click)=\"select(item)\">\n      </div>\n      <div class=\"col-md-6 borders\"> \n        <h6>{{item.name}}</h6>\n        <p>{{item.desc}}</p>\n      <!-- </div> -->\n        <form (submit)=\"updateCart()\" class=\"form-inline\"> \n          <div *ngIf=\"errors\">{{errors}}</div>\n          <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"\" required min=\"0\" max=\"{{item.quantity}}\" #cartProd=\"ngModel\"/>\n          <input type=\"submit\" value=\"Change\" class=\"btn btn-sm btn-primary\"/>\n        </form>\n        <button (click)=\"remove(item)\" class=\"btn btn-sm btn-warning\">Remove from cart</button>        \n      </div>\n    </div>\n  </div>\n  <div class=\"col-md-3 borders\">\n    <h6>Number of Items: <span>{{cart.length}}</span></h6>\n    <h6>Total: <span>{{total}}</span></h6>\n    <button (click)=\"buy()\" class=\"btn btn-sm btn-success\">Buy</button>\n  </div>\n</div>"
+module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<div *ngIf=\"!cart\">\n  <p>Your cart is empty!</p>\n</div>\n<div class=\"row\" *ngIf=\"cart\">\n  <div *ngFor=\"let prod of cart\" class=\"col-md-9\">\n    <div class=\"row cartItem\">\n      <div class=\"thumb col-md-4\"> \n        <img src=\"{{prod.item.photosrc}}\" alt=\"Image of {{prod.item.name}}\" class=\"img-thumbnail\" (click)=\"select(prod)\">\n      </div>\n      <div class=\"col-md-6 borders\"> \n        <h6>{{prod.item.name}}</h6>\n        <p>{{prod.item.desc}} | ${{prod.item.price}}.00</p>\n        <p>Quantity: {{prod.quantity}} | Subtotal: ${{prod.item.price * prod.quantity}}.00</p>\n        <form (submit)=\"updateCart(prod)\" class=\"form-inline\"> \n          <div *ngIf=\"errors\">{{errors}}</div>\n          <input type=\"number\" name=\"quantity\" [(ngModel)]=\"cartProd.quantity\" value=\"\" required min=\"0\" max=\"{{prod.item.quantity}}\" #cartProd=\"ngModel\"/>\n          <input type=\"submit\" value=\"Change\" class=\"btn btn-sm btn-primary\"/>\n        </form>\n        <button (click)=\"drop(prod)\" class=\"btn btn-sm btn-warning\">Remove from cart</button>        \n      </div>\n    </div>\n  </div>\n  <div class=\"col-md-3 borders subtotal\">\n    <h6>Number of Items: {{numItems}}</h6>\n    <h6>Total: ${{total}}.00</h6>\n    <button (click)=\"buy()\" class=\"btn btn-sm btn-success\">Buy</button>\n    <button (click)=\"empty()\" class=\"btn btn-sm btn-danger\">Empty My Cart</button>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -347,16 +363,42 @@ var CartComponent = /** @class */ (function () {
     CartComponent.prototype.loadcart = function () {
         var _this = this;
         this.uServ.find(this.userId, function (data) {
-            console.log(data);
+            _this.total = 0;
+            _this.numItems = 0;
             _this.cart = data.cart;
-            console.log("cart", _this.cart);
+            // console.log(this.cart)
+            for (var _i = 0, _a = _this.cart; _i < _a.length; _i++) {
+                var x = _a[_i];
+                _this.total += (x.item.price * x.quantity);
+                _this.numItems += x.quantity;
+            }
         });
-        for (var _i = 0, _a = this.cart; _i < _a.length; _i++) {
-            var x = _a[_i];
-            this.total += x.price;
-        }
     };
-    CartComponent.prototype.updateCart = function () {
+    CartComponent.prototype.drop = function (prod) {
+        var _this = this;
+        this.uServ.dropFromCart(prod, function (data) {
+            if (data.errors) {
+                console.log("comp remove err", data);
+            }
+            else {
+                console.log("removed!");
+                _this.loadcart();
+            }
+        });
+    };
+    CartComponent.prototype.empty = function () {
+        var _this = this;
+        this.uServ.emptyCart(this.userId, function (data) {
+            if (data.errors) {
+                console.log("comp empty err", data);
+            }
+            else {
+                console.log("carted!");
+                _this.loadcart();
+            }
+        });
+    };
+    CartComponent.prototype.updateCart = function (prod) {
         this.loadcart();
     };
     CartComponent.prototype.buy = function () {
@@ -368,18 +410,6 @@ var CartComponent = /** @class */ (function () {
             else {
                 console.log("carted!");
                 _this.router.navigate(["/purchase"]);
-            }
-        });
-    };
-    CartComponent.prototype.remove = function (prod) {
-        var _this = this;
-        this.uServ.removeFromCart(this.userId, function (data) {
-            if (data.errors) {
-                console.log("comp remove err", data);
-            }
-            else {
-                console.log("carted!");
-                _this.loadcart();
             }
         });
     };
@@ -782,7 +812,7 @@ module.exports = "h6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #
 /***/ "./src/app/components/singleprod/singleprod.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row show\">\n  <div class=\"thumb\">\n    <img src=\"{{selected.photosrc}}\" alt=\"Image of {{selected.name}}\" class=\"img-thumbnail\" (click)=\"select(selected)\">\n  </div>\n  <div>\n    <h6>{{selected.name}}</h6>\n    <p>{{selected.desc}}</p>\n  </div>\n  <form (submit)=\"addToCart(addProd)\" class=\"form-control\">\n    <div *ngIf=\"errors\">{{errors}}</div>\n    <p>{{selected.inventory}} in stock</p>\n    <input type=\"number\" name=\"quantity\" [(ngModel)]=\"addProd.quantity\" value=\"1\" required min=\"1\" max=\"{{selected.inventory}}\" #addProd=\"ngModel\"/>\n    <br><br>\n    <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n  </form>\n</div>\n{{addProd.quantity}}"
+module.exports = "<div class=\"row show\">\n  <div class=\"thumb\">\n    <img src=\"{{selected.photosrc}}\" alt=\"Image of {{selected.name}}\" class=\"img-thumbnail\" (click)=\"select(selected)\">\n  </div>\n  <div>\n    <h6>{{selected.name}}</h6>\n    <p>{{selected.desc}}</p>\n  </div>\n  <!-- <form (submit)=\"addToCart()\" class=\"form-control\"> -->\n  <form (submit)=\"addToCart(addProd)\" class=\"form-control\">\n      <div *ngIf=\"errors\">{{errors}}</div>\n    <p>{{selected.inventory}} in stock</p>\n    <input type=\"number\" name=\"quantity\" [(ngModel)]=\"addProd.quantity\" value=\"1\" required min=\"1\" max=\"{{selected.inventory}}\" #addProd=\"ngModel\"/>\n    <br><br>\n    <input type=\"submit\" value=\"Add to Cart\" class=\"btn btn-sm btn-primary\"/>\n  </form>\n</div>\n<!-- {{addProd.quantity}} -->"
 
 /***/ }),
 
@@ -810,6 +840,10 @@ var SingleprodComponent = /** @class */ (function () {
         this.uServ = uServ;
         this.myCartEvent = new core_1.EventEmitter();
         this.myCart2Event = new core_1.EventEmitter();
+        this.addProd = {
+            prodId: 0,
+            quantity: 1
+        };
     }
     SingleprodComponent.prototype.ngOnInit = function () {
         this.addProd = {
@@ -817,9 +851,13 @@ var SingleprodComponent = /** @class */ (function () {
             quantity: 1
         };
     };
-    SingleprodComponent.prototype.addToCart = function () {
+    SingleprodComponent.prototype.addToCart = function (buying) {
         var _this = this;
-        console.log("add to cart", this.addProd);
+        // console.log("add to cart buying", buying)
+        // console.log("add to cart quant", buying.quantity)
+        this.addProd.quantity = buying.quantity;
+        console.log("add to cart addprod", this.addProd);
+        // console.log("the item", this.selected._id)
         this.uServ.addToCart(this.addProd, function (data) {
             if (data.errors) {
                 console.log("comp add err", data);
@@ -951,38 +989,40 @@ var UsersService = /** @class */ (function () {
         this.router.navigate(["/"]);
     };
     UsersService.prototype.isValid = function () {
-        // console.log("isvalid", (localStorage.getItem("userId") != undefined))
         return localStorage.getItem("userId") != undefined; // returns if T/F if userId exists in session
     };
     UsersService.prototype.isAdmin = function () {
-        // console.log("isadmin", localStorage.getItem("admin"))
         return localStorage.getItem("admin"); // returns T/F if admin
     };
     UsersService.prototype.session = function () {
-        console.log("session service", localStorage.getItem("userId"));
         return localStorage.getItem("userId");
-    };
-    // session2() { 
-    //   this.http.get("/session") 
-    //   .subscribe(data=>console.log("why do we have this at all???", data)); 
-    // } 
-    UsersService.prototype.addToCart = function (addProd, cb) {
-        var id = localStorage.getItem("userId");
-        this.http.put("/users/cart/" + id, addProd)
-            .subscribe(function (data) { return cb(data); });
     };
     UsersService.prototype.find = function (id, cb) {
         this.http.get("/users/" + id)
             .subscribe(function (data) { return cb(data); });
     };
-    UsersService.prototype.purchase = function (id, cb) {
-        // this.http.put("/users/"+ id)
-        // .subscribe(data=>cb(data));
+    UsersService.prototype.addToCart = function (addProd, cb) {
+        var id = localStorage.getItem("userId");
+        this.http.put("/users/cart/" + id, addProd)
+            .subscribe(function (data) { return cb(data); });
     };
-    UsersService.prototype.removeFromCart = function (prod, cb) {
+    UsersService.prototype.dropFromCart = function (prod, cb) {
         var id = localStorage.getItem("userId");
         this.http.put("/users/drop/" + id, prod)
             .subscribe(function (data) { return cb(data); });
+    };
+    UsersService.prototype.emptyCart = function (id, cb) {
+        this.http.put("/users/empty/" + id, id)
+            .subscribe(function (data) { return cb(data); });
+    };
+    UsersService.prototype.updateCart = function (prod, cb) {
+        var id = localStorage.getItem("userId");
+        this.http.put("/users/update/" + id, prod)
+            .subscribe(function (data) { return cb(data); });
+    };
+    UsersService.prototype.purchase = function (id, cb) {
+        // this.http.put("/users/"+ id)
+        // .subscribe(data=>cb(data));
     };
     UsersService = __decorate([
         core_1.Injectable(),

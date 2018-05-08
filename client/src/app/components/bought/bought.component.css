@@ -1,0 +1,12 @@
+.links button {
+    margin: 5px;
+}
+h4 {
+    font-family: 'Pacifico', cursive; 
+    color: #007bff;
+    margin: 10px 0px;
+}
+.borders {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}

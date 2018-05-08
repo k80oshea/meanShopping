@@ -22,38 +22,41 @@ export class UsersService {
   } 
 
   isValid() {
-    // console.log("isvalid", (localStorage.getItem("userId") != undefined))
 		return localStorage.getItem("userId") != undefined; // returns if T/F if userId exists in session
   }
   isAdmin() {
-    // console.log("isadmin", localStorage.getItem("admin"))
 		return localStorage.getItem("admin"); // returns T/F if admin
   }
   session() { 
-    console.log("session service", localStorage.getItem("userId"))
     return localStorage.getItem("userId");
   }
-  // session2() { 
-  //   this.http.get("/session") 
-  //   .subscribe(data=>console.log("why do we have this at all???", data)); 
-  // } 
-  addToCart(addProd, cb) {
+  find(id, cb) { // get user and populates on product id inside cart
+    this.http.get("/users/"+id)
+    .subscribe(data=>cb(data));
+  }
+  addToCart(addProd, cb) { // adds single product and # items of product
     let id = localStorage.getItem("userId");
     this.http.put("/users/cart/"+ id, addProd)
     .subscribe(data=>cb(data));
   }
-  find(id, cb) {
-    this.http.get("/users/"+id)
-    .subscribe(data=>cb(data));
-  }
-  purchase(id, cb) {
-    // this.http.put("/users/"+ id)
-    // .subscribe(data=>cb(data));
-  }
-  removeFromCart(prod, cb) {
+  dropFromCart(prod, cb) { // removes whole item
     let id = localStorage.getItem("userId");
     this.http.put("/users/drop/"+ id, prod)
     .subscribe(data=>cb(data));
   }
+  emptyCart(id, cb) { // empties full cart
+    this.http.put("/users/empty/"+ id, id)
+    .subscribe(data=>cb(data));
+  }  
+  updateCart(prod,cb) {
+    let id = localStorage.getItem("userId");    
+    this.http.put("/users/update/"+ id, prod)
+    .subscribe(data=>cb(data));
+  }
+  purchase(id, cb) { // purchases full cart
+    // this.http.put("/users/"+ id)
+    // .subscribe(data=>cb(data));
+  }
+
 
 }

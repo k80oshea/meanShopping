@@ -6,12 +6,13 @@
     <h6>{{selected.name}}</h6>
     <p>{{selected.desc}}</p>
   </div>
+  <!-- <form (submit)="addToCart()" class="form-control"> -->
   <form (submit)="addToCart(addProd)" class="form-control">
-    <div *ngIf="errors">{{errors}}</div>
+      <div *ngIf="errors">{{errors}}</div>
     <p>{{selected.inventory}} in stock</p>
     <input type="number" name="quantity" [(ngModel)]="addProd.quantity" value="1" required min="1" max="{{selected.inventory}}" #addProd="ngModel"/>
     <br><br>
     <input type="submit" value="Add to Cart" class="btn btn-sm btn-primary"/>
   </form>
 </div>
-{{addProd.quantity}}
+<!-- {{addProd.quantity}} -->

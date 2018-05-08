@@ -72,76 +72,15 @@ class UserController{
             }
         })
     }
-    // session(req, res) {
-    //     console.log("am i even getting here??", req.session.userId);
-    //     if(req.session.userId) {
-    //         User.findOne({_id:req.session.userId})
-    //         .populate({
-    //             model:"Product",
-    //             path:"cart"
-    //         })
-    //         .exec((err, user)=> {
-    //             if(err) {
-    //                 res.json(false);
-    //             }
-    //             else{
-    //                 res.json(user);
-    //             }
-    //         })
-    //     }
-    //     else {
-    //         res.json(false);
-    //     }
-    // }
     logout(req, res) {
         req.session.userId = null;
         res.json(true)
-    }
-    cart(req, res) { 
-        console.log("ctrller", req.body) 
-        Product.findOne({_id: req.body.prodId}, (err, prod)=> {
-            if(err) {
-                res.json({errors: "Could not find product"});                    
-            }
-            else {
-                prod.inventory = prod.inventory - req.body.quantity;
-                prod.save(function(err) {
-                    if(err) {
-                        res.json({errors: "Unable to update product"});
-                    }
-                    else {
-                        console.log("inventory updated", prod);
-                        User.findOne({_id:req.params.id}, (err, user)=> {
-                            if(err) {
-                                res.json({errors: "Failed to lookup user."});
-                            }
-                            else {
-                                if(user.cart == undefined) {
-                                    user.cart = [];
-                                }
-                                user.cart.push({prod: req.body.quantity});                                
-                                console.log("final cart", user.cart);
-                                user.save(err=> {
-                                    if(err) {
-                                        res.json({errors: "Could not save user"});
-                                    }
-                                    else {
-                                        console.log("product and usercart saved!!", user.cart);
-                                        res.json({user, success: "Succesfully added to cart!"});
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            }
-        })
     }
     find(req, res) {
         User.find({_id:req.params.id})
         .populate({
             model:"Product",
-            path:"cart"
+            path:"cart.item" // cart.item
         })
         .exec((err, userArray)=> {
         // User.find({_id: req.params.id}, (err, userArray)=> {
@@ -155,6 +94,116 @@ class UserController{
             }
         });
     }
+    cart(req, res) { 
+        Product.findOne({_id: req.body.prodId}, (err, prod)=> {
+            if(err) {
+                res.json({errors: "Could not find product"});                    
+            }
+            else {
+                prod.inventory = prod.inventory - req.body.quantity;
+                prod.save(function(err) {
+                    if(err) {
+                        res.json({errors: "Unable to update product"});
+                    }
+                    else {
+                        User.findOne({_id:req.params.id}, (err, user)=> {
+                            if(err) {
+                                res.json({errors: "Failed to lookup user."});
+                            }
+                            else {
+                                if(user.cart == undefined) {
+                                    user.cart = [];
+                                }
+                        // what if the user adds the same icon a second time
+                                user.cart.push({item:prod, quantity:req.body.quantity});                         
+                                user.save(err=> {
+                                    if(err) {
+                                        res.json({errors: "Could not save user"});
+                                    }
+                                    else {
+                                        res.json({user, success: "Succesfully added to cart!"});
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+    drop(req, res) { // drops full item from cart and replenishes inventory on actual product
+        User.findOne({_id:req.params.id}, (err, user)=> {
+            if(err) {
+                res.json({errors: "Failed to lookup user."});
+            }
+            else {
+                let x = user.cart.length-1;
+                while(x > 0) {
+                    Product.findOne({_id: user.cart[x].item}, (err, prod)=> {
+                        if(err) {
+                            res.json({errors: "Could not find product"});                    
+                        }
+                        else {
+                            prod.inventory = prod.inventory + user.cart[x].quantity;
+                            prod.save(function(err) {
+                                if(err) {
+                                    res.json({errors: "Unable to update product"});
+                                }
+                                else {
+                                    console.log("removed from cart", prod)
+                                }
+                            })
+                        }
+                    })
+                    user.cart.pop();
+                    x--;
+                }
+                user.save(err=> {
+                    if(err) {
+                        res.json({errors: "Could not save user"});
+                    }
+                    else {
+                        Product.findOne({_id: req.body.item}, (err, prod)=> {
+                            if(err) {
+                                res.json({errors: "Could not find product"});                    
+                            }
+                            else {
+                                prod.inventory = prod.inventory + req.body.quantity;
+                                prod.save(function(err) {
+                                    if(err) {
+                                        res.json({errors: "Unable to update product"});
+                                    }
+                                    else {
+                                        res.json(user);
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+    empty(req, res) {
+        User.find({_id: req.params.id}, (err, userArray)=> {
+            if(err) {
+                res.json({errors: "Could not find user"});
+            }
+            else {
+                let user = userArray[0];
+                user.cart = [];
+                console.log("empty cart", user)
+                user.save(err=> {
+                    if(err) {
+                        res.json({errors: "Could not save user"});
+                    }
+                    else {
+                        res.json(user);
+                    }
+                });
+            }
+        })
+    } 
     purchase(req, res) {
         User.find({_id: req.params.id}, (err, userArray)=> {
             if(err) {
@@ -179,50 +228,12 @@ class UserController{
             }
         })
     } 
-    drop(req, res) { 
-        console.log("ctrller", req.body) // ctrller { prodId: '5ae7919c6698cb21f49e2fa6', quantity: 1 }
-        Product.findOne({_id: req.body.prodId}, (err, prod)=> {
-            if(err) {
-                res.json({errors: "Could not find product"});                    
-            }
-            else {
-                prod.quantity = prod.quantity - req.body.quantity;
-                prod.save(function(err) {
-                    if(err) {
-                        res.json({errors: "Unable to update product"});
-                    }
-                    else {
-                        console.log("inventory updated", prod);
-                        User.findOne({_id:req.params.id}, (err, user)=> {
-                            if(err) {
-                                res.json({errors: "Failed to lookup user."});
-                            }
-                            else {
-                                let want = req.body.quantity;
-                                if(user.cart == undefined) {
-                                    user.cart = [];
-                                }
-                                while(want > 0) { 
-                                    user.cart.push(prod);
-                                    want--;
-                                }
-                                console.log("final cart", user.cart);   
-                                user.save(err=> {
-                                    if(err) {
-                                        res.json({errors: "Could not save user"});
-                                    }
-                                    else {
-                                        console.log("product and usercart saved!!", user.cart);
-                                        res.json({user, success: "Succesfully added to cart!"});
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            }
-        })
+    update(req, res) {
     }
+
+    // db.users.update({first:"Caroline"}, {$set: {cart: []}})
+
+
     // destroy(req, res) {
     //     User.findOne({_id: req.session._id}, (err, user)=> { 
     //         if(user.admin == true) {

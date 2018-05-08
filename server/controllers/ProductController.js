@@ -43,7 +43,7 @@ class ProductController{
                 prod.desc = req.body.desc || prod.desc;
                 prod.photosrc = req.body.photosrc || prod.photosrc;
                 prod.price = req.body.price || prod.price;
-                prod.quantity = req.body.quantity || prod.quantity;
+                prod.inventory = req.body.inventory || prod.inventory;
                 prod.save(function(err) {
                     if(err) {
                         res.json({errors: err});
