@@ -251,7 +251,7 @@ module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh4 {\r\n    font-f
 /***/ "./src/app/components/bought/bought.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<h4>Purchase successful!</h4>\n<!-- <p> Click here to see your purchase history </p> -->\n<button (click)=\"browse\" class=\"btn btn-sm btn-primary\">Continue Shopping</button>\n"
+module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<h4>Purchase successful!</h4>\n<!-- <a> Click here to see your purchase history </a> -->\n{{lastPurch}}\n<div *ngFor=\"let x of lastPurch\">\n  <p>{{x.item}}</p>\n  <p>{{x.item.name}}</p>\n  \n</div>\n<button (click)=\"browse\" class=\"btn btn-sm btn-primary\">Continue Shopping</button>\n"
 
 /***/ }),
 
@@ -285,12 +285,22 @@ var BoughtComponent = /** @class */ (function () {
         if (!this.uServ.isValid())
             this.router.navigate(["/"]);
         this.userId = this.uServ.session();
+        this.getHistory();
     };
     BoughtComponent.prototype.browse = function () {
         this.router.navigate(["/browse"]);
     };
     BoughtComponent.prototype.logout = function () {
         this.uServ.logout();
+    };
+    BoughtComponent.prototype.getHistory = function () {
+        var _this = this;
+        this.uServ.find(this.userId, function (data) {
+            _this.history = data.history;
+            _this.lastPurch = (_this.history[_this.history.length - 1]);
+            console.log(_this.history);
+            console.log(_this.lastPurch);
+        });
     };
     BoughtComponent = __decorate([
         core_1.Component({
@@ -310,7 +320,7 @@ exports.BoughtComponent = BoughtComponent;
 /***/ "./src/app/components/cart/cart.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}\r\n.subtotal {\r\n    height: 125px;\r\n}\r\nbutton {\r\n    margin: 10px 0px;\r\n}\r\n"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}\r\n.subtotal {\r\n    /* height: 125px; */\r\n}\r\nbutton {\r\n    margin: 10px 0px;\r\n}\r\n"
 
 /***/ }),
 
@@ -398,9 +408,6 @@ var CartComponent = /** @class */ (function () {
             }
         });
     };
-    CartComponent.prototype.updateCart = function (prod) {
-        this.loadcart();
-    };
     CartComponent.prototype.buy = function () {
         var _this = this;
         this.uServ.purchase(this.userId, function (data) {
@@ -412,6 +419,9 @@ var CartComponent = /** @class */ (function () {
                 _this.router.navigate(["/purchase"]);
             }
         });
+    };
+    CartComponent.prototype.updateCart = function (prod) {
+        this.loadcart();
     };
     CartComponent = __decorate([
         core_1.Component({
@@ -1015,14 +1025,14 @@ var UsersService = /** @class */ (function () {
         this.http.put("/users/empty/" + id, id)
             .subscribe(function (data) { return cb(data); });
     };
+    UsersService.prototype.purchase = function (id, cb) {
+        this.http.put("/users/" + id, id)
+            .subscribe(function (data) { return cb(data); });
+    };
     UsersService.prototype.updateCart = function (prod, cb) {
         var id = localStorage.getItem("userId");
         this.http.put("/users/update/" + id, prod)
             .subscribe(function (data) { return cb(data); });
-    };
-    UsersService.prototype.purchase = function (id, cb) {
-        // this.http.put("/users/"+ id)
-        // .subscribe(data=>cb(data));
     };
     UsersService = __decorate([
         core_1.Injectable(),

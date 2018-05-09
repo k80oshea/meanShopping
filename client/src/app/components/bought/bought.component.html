@@ -5,5 +5,11 @@
   </div>
 </div>
 <h4>Purchase successful!</h4>
-<!-- <p> Click here to see your purchase history </p> -->
+<!-- <a> Click here to see your purchase history </a> -->
+{{lastPurch}}
+<div *ngFor="let x of lastPurch">
+  <p>{{x.item}}</p>
+  <p>{{x.item.name}}</p>
+  
+</div>
 <button (click)="browse" class="btn btn-sm btn-primary">Continue Shopping</button>

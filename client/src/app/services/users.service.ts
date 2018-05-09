@@ -48,15 +48,16 @@ export class UsersService {
     this.http.put("/users/empty/"+ id, id)
     .subscribe(data=>cb(data));
   }  
+  purchase(id, cb) { // purchases full cart
+    this.http.put("/users/"+ id, id)
+    .subscribe(data=>cb(data));
+  }  
   updateCart(prod,cb) {
     let id = localStorage.getItem("userId");    
     this.http.put("/users/update/"+ id, prod)
     .subscribe(data=>cb(data));
   }
-  purchase(id, cb) { // purchases full cart
-    // this.http.put("/users/"+ id)
-    // .subscribe(data=>cb(data));
-  }
+
 
 
 }

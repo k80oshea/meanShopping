@@ -21,8 +21,7 @@ mongoose.model("User", new mongoose.Schema({
         { "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}
     ],
     history:[ 
-        // [{item:{ type:ObjectId, ref:"Product" }, quantity:{type:Number, required:true}}] // array of cart arrays   
-        [{ "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}]
-    ]
+        [{ "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}] // array of cart arrays 
+        ]
     }, {timestamps: true} 
 ));

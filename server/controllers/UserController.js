@@ -76,20 +76,23 @@ class UserController{
         req.session.userId = null;
         res.json(true)
     }
-    find(req, res) {
+    findCart(req, res) {
         User.find({_id:req.params.id})
         .populate({
             model:"Product",
-            path:"cart.item" // cart.item
+            path:"cart.item",
+            populate: {
+                model: "Product",
+                path: "history.oldCart.item"
+            }
         })
         .exec((err, userArray)=> {
-        // User.find({_id: req.params.id}, (err, userArray)=> {
             if(err) {
                 res.json({errors: "Could not find user"});
             }
             else {
                 let user = userArray[0];
-                // console.log(user)
+                console.log(user.history)
                 res.json(user);
             }
         });
@@ -137,26 +140,10 @@ class UserController{
                 res.json({errors: "Failed to lookup user."});
             }
             else {
-                let x = user.cart.length-1;
-                while(x > 0) {
-                    Product.findOne({_id: user.cart[x].item}, (err, prod)=> {
-                        if(err) {
-                            res.json({errors: "Could not find product"});                    
-                        }
-                        else {
-                            prod.inventory = prod.inventory + user.cart[x].quantity;
-                            prod.save(function(err) {
-                                if(err) {
-                                    res.json({errors: "Unable to update product"});
-                                }
-                                else {
-                                    console.log("removed from cart", prod)
-                                }
-                            })
-                        }
-                    })
-                    user.cart.pop();
-                    x--;
+                for(let x in user.cart) {
+                    if(user.cart[x].item == req.body.item._id){
+                        user.cart.splice(x,1);
+                    }
                 }
                 user.save(err=> {
                     if(err) {
@@ -184,15 +171,32 @@ class UserController{
             }
         })
     }
-    empty(req, res) {
+    empty(req, res) { // empties full cart
         User.find({_id: req.params.id}, (err, userArray)=> {
             if(err) {
                 res.json({errors: "Could not find user"});
             }
             else {
                 let user = userArray[0];
+                for(let x of user.cart) {
+                    Product.findOne({_id: x.item}, (err, prod)=> {
+                        if(err) {
+                            res.json({errors: "Could not find product"});                    
+                        }
+                        else {
+                            prod.inventory = prod.inventory + x.quantity;
+                            prod.save(function(err) {
+                                if(err) {
+                                    res.json({errors: "Unable to update product"});
+                                }
+                                else { 
+                                    return prod;
+                                }
+                            })
+                        }
+                    })
+                }                
                 user.cart = [];
-                console.log("empty cart", user)
                 user.save(err=> {
                     if(err) {
                         res.json({errors: "Could not save user"});
@@ -229,6 +233,7 @@ class UserController{
         })
     } 
     update(req, res) {
+
     }
 
     // db.users.update({first:"Caroline"}, {$set: {cart: []}})

@@ -63,10 +63,6 @@ export class CartComponent implements OnInit {
       }
     });
   }
-  updateCart(prod) {
-
-    this.loadcart();
-  }
   buy() {
     this.uServ.purchase(this.userId, (data)=>{ 
       if(data.errors) {
@@ -77,5 +73,10 @@ export class CartComponent implements OnInit {
         this.router.navigate(["/purchase"]);
       }
     });
+  }  
+  updateCart(prod) {
+
+    this.loadcart();
   }
+
 }
