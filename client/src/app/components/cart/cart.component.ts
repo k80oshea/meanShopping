@@ -39,6 +39,7 @@ export class CartComponent implements OnInit {
         this.total += (x.item.price * x.quantity);
         this.numItems += x.quantity;
       }
+      console.log(this.cart);
     });
   }
   drop(prod) { //remove whole prod

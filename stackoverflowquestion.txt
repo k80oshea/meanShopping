@@ -1,0 +1,104 @@
+I'm currently having troubles with .populate() on my model for an array of arrays of dictionaries. I'm pushing the user's cart (an array of dictionaries) into the user's history (an array of arrays). I want to be able to show the product information for the user's past carts/purchase history. 
+It's not getting through to the second level of inside the array matrix to the dictionaries where it can populate the actual model and not just show the dictionary. The issue is coming through where I have no way to call each array separately or as if in a loop. The .populate() works properly on the cart attribute and does pull from the designated Product model. I've tried restructuring a variety of ways, but still get the same results. Any insight would be much appreciated!
+
+        // User Model
+        mongoose.model("User", new mongoose.Schema({
+        ...
+            cart:[ { "item":{ type:ObjectId, ref:"Product" }, "quantity": {type:Number, required:true}} ],
+            history:[ [{ "item":{ type:ObjectId, ref:"Product" }, "quantity": {type:Number, required:true}}] ], // array of cart arrays
+        ...
+        ));
+
+        //User Controller
+        User.find({_id:req.params.id})
+        .populate({
+            model:"Product",
+            path:"cart.item", // this works just fine
+            populate: {
+                model: "Product",
+                path: "history.item" // this has no effect (obviously, should be something like history.x.item to iterate through the arrays in history)
+            }
+        })
+        .exec((err, userArray)=> {
+            if(err) {
+                res.json({errors: "Could not find user"});
+            }
+            else {
+                let user = userArray[0];
+                console.log(user.history)               
+                res.json(user);
+            }
+        });
+
+
+(3) [Array(2), Array(0), Array(3)]
+0
+:
+Array(2)
+0
+:
+{_id: "5af5e21607e4b4377ccebab6", item: "5ae7919c6698cb21f49e2fa6", quantity: 3}
+1
+:
+{_id: "5af5e21a07e4b4377ccebab7", item: "5aea1a8b4d513440ac70daf8", quantity: 1}
+length
+:
+2
+__proto__
+:
+Array(0)
+1
+:
+Array(0)
+length
+:
+0
+__proto__
+:
+Array(0)
+2
+:
+Array(3)
+0
+:
+item
+:
+"5ae8b9790a739c3a6409c6ca"
+quantity
+:
+2
+_id
+:
+"5af5fdf654ef144560262667"
+__proto__
+:
+Object
+1
+:
+{_id: "5af5fdfc54ef144560262668", item: "5ae8dbd83111861c78dc8606", quantity: 1}
+2
+:
+{_id: "5af5fe1b54ef144560262669", item: "5ae8dc4a3111861c78dc8607", quantity: 1}
+length
+:
+3
+
+
+
+Cart with .populate()
+(3) [{…}, {…}, {…}]
+    0:
+        item:
+            createdAt: "2018-05-01T19:01:13.439Z"
+            desc: "Marine Layer - Summer Tunic"
+            inventory: 4
+            name: "Bali Tunic"
+            photosrc: "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/263638745114/BaliTunic_PIP_PI_M2.jpg"
+            price: 88
+            updatedAt: "2018-05-11T20:35:23.767Z"
+            __v: 0
+            _id: "5ae8b9790a739c3a6409c6ca"
+        quantity: 1
+        _id: "5af5fe8be9760848d052ad86"
+    1: {_id: "5af5fea8e9760848d052ad87", item: {…}, quantity: 1}
+    2: {_id: "5af5feace9760848d052ad88", item: {…}, quantity: 1}

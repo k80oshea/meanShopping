@@ -20,8 +20,8 @@ mongoose.model("User", new mongoose.Schema({
     cart:[
         { "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}
     ],
-    history:[ 
+    history:[
         [{ "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}] // array of cart arrays 
-        ]
-    }, {timestamps: true} 
+    ]}, 
+    {timestamps: true} 
 ));

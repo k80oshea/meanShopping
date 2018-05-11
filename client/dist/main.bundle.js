@@ -63,7 +63,7 @@ exports.AppRoutingModule = AppRoutingModule;
 /***/ "./src/app/app.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h1 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff; \r\n    text-align: center;\r\n    margin: 15px 0px;\r\n}"
+module.exports = "h1 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff; \r\n    text-align: center;\r\n    margin: 15px 0px;\r\n}"
 
 /***/ }),
 
@@ -244,7 +244,7 @@ exports.AdminComponent = AdminComponent;
 /***/ "./src/app/components/bought/bought.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh4 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh4 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}"
 
 /***/ }),
 
@@ -320,7 +320,7 @@ exports.BoughtComponent = BoughtComponent;
 /***/ "./src/app/components/cart/cart.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}\r\n.subtotal {\r\n    /* height: 125px; */\r\n}\r\nbutton {\r\n    margin: 10px 0px;\r\n}\r\n"
+module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh6 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.cartItem {\r\n    margin: 10px auto;\r\n}\r\n.borders {\r\n    border: 1px solid #ced4da;\r\n    border-radius: .25rem;\r\n}\r\n.subtotal {\r\n    /* height: 125px; */\r\n}\r\nbutton {\r\n    margin: 10px 0px;\r\n}\r\n"
 
 /***/ }),
 
@@ -382,6 +382,7 @@ var CartComponent = /** @class */ (function () {
                 _this.total += (x.item.price * x.quantity);
                 _this.numItems += x.quantity;
             }
+            console.log(_this.cart);
         });
     };
     CartComponent.prototype.drop = function (prod) {
@@ -441,7 +442,7 @@ exports.CartComponent = CartComponent;
 /***/ "./src/app/components/edit-prods/edit-prods.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.edits {\r\n    margin: 10px auto;\r\n}\r\n.scrollie {\r\n    height: 400px;\r\n    overflow: auto;\r\n}\r\nimg {\r\n    display: block;\r\n    width: 230px;\r\n    height: 145px;\r\n    -webkit-transition: .5s ease;\r\n    transition: .5s ease;\r\n    -webkit-backface-visibility: hidden;\r\n            backface-visibility: hidden;\r\n}\r\n.thumb {\r\n    /* vertical-align: middle; */\r\n    top: 7px;\r\n}"
+module.exports = "h3 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.edits {\r\n    margin: 10px auto;\r\n}\r\n.scrollie {\r\n    height: 400px;\r\n    overflow: auto;\r\n}\r\nimg {\r\n    display: block;\r\n    width: 230px;\r\n    height: 145px;\r\n    -webkit-transition: .5s ease;\r\n    transition: .5s ease;\r\n    -webkit-backface-visibility: hidden;\r\n            backface-visibility: hidden;\r\n}\r\n.thumb {\r\n    /* vertical-align: middle; */\r\n    top: 7px;\r\n}"
 
 /***/ }),
 
@@ -526,7 +527,7 @@ exports.EditProdsComponent = EditProdsComponent;
 /***/ "./src/app/components/logreg/logreg.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h2 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff; \r\n    text-align: center;\r\n}"
+module.exports = "h2 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff; \r\n    text-align: center;\r\n}"
 
 /***/ }),
 
@@ -641,7 +642,7 @@ exports.LogregComponent = LogregComponent;
 /***/ "./src/app/components/new-prod/new-prod.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h3 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.prodforms {\r\n    margin: 10px auto;  \r\n}"
+module.exports = "h3 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.prodforms {\r\n    margin: 10px auto;  \r\n}"
 
 /***/ }),
 
@@ -815,7 +816,7 @@ exports.ProductsComponent = ProductsComponent;
 /***/ "./src/app/components/singleprod/singleprod.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "h6 {\r\n    font-family: 'Pacifico', cursive; \r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.show {\r\n    margin: 10px auto;\r\n    display: block;\r\n}"
+module.exports = "h6 {\r\n    font-family: 'Poiret One', cursive;\r\n    font-weight: bold;\r\n    color: #007bff;\r\n    margin: 10px 0px;\r\n}\r\n.show {\r\n    margin: 10px auto;\r\n    display: block;\r\n}"
 
 /***/ }),
 

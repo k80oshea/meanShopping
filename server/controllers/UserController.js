@@ -83,7 +83,7 @@ class UserController{
             path:"cart.item",
             populate: {
                 model: "Product",
-                path: "history.oldCart.item"
+                path: "history.item"
             }
         })
         .exec((err, userArray)=> {
@@ -93,6 +93,13 @@ class UserController{
             else {
                 let user = userArray[0];
                 console.log(user.history)
+                // for(let x of user.history) {
+                //     populate({
+                //         model: "Product",
+                //         path: "x.item"
+                //     })
+                // }
+                // console.log("new populate", user.history)                
                 res.json(user);
             }
         });
