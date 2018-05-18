@@ -23,5 +23,12 @@ mongoose.model("User", new mongoose.Schema({
     history:[
         [{ "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}] // array of cart arrays 
     ]}, 
+    // history:[
+    //     { prev: [{ "item":{ type:ObjectId, ref:"Product" }, "quantity":{type:Number, required:true}}] } // array of cart arrays 
+    // ]}, 
     {timestamps: true} 
 ));
+
+// const HistSchema = new mongoose.Schema({
+
+// });

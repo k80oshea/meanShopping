@@ -251,7 +251,7 @@ module.exports = ".links button {\r\n    margin: 5px;\r\n}\r\nh4 {\r\n    font-f
 /***/ "./src/app/components/bought/bought.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<h4>Purchase successful!</h4>\n<!-- <a> Click here to see your purchase history </a> -->\n{{lastPurch}}\n<div *ngFor=\"let x of lastPurch\">\n  <p>{{x.item}}</p>\n  <p>{{x.item.name}}</p>\n  \n</div>\n<button (click)=\"browse\" class=\"btn btn-sm btn-primary\">Continue Shopping</button>\n"
+module.exports = "<div class=\"row links\">\n  <div class=\"col-12 d-flex justify-content-end\">    \n    <button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Browse</button>\n    <button (click)=\"logout()\" class=\"btn btn-sm btn-primary\">Logout</button>\n  </div>\n</div>\n<h4>Purchase successful!</h4>\n<p>Your {{lastPurch.length}} items are on their way!</p>\n<!-- <a> Click here to see your purchase history </a> -->\n<!-- {{lastPurch}} -->\n<!-- <div *ngFor=\"let x of lastPurch\">\n  <p>item {{x.item}}</p>\n  <p>name {{x.item.name}}</p>\n  \n</div> -->\n<button (click)=\"browse()\" class=\"btn btn-sm btn-primary\">Continue Shopping</button>\n"
 
 /***/ }),
 
@@ -297,9 +297,16 @@ var BoughtComponent = /** @class */ (function () {
         var _this = this;
         this.uServ.find(this.userId, function (data) {
             _this.history = data.history;
+            console.log(data);
+            // console.log(data['history'][0]);
+            for (var x in data.history) {
+                for (var y in data.history[x]) {
+                    console.log("boo", data.history[x][y].item);
+                }
+            }
             _this.lastPurch = (_this.history[_this.history.length - 1]);
-            console.log(_this.history);
-            console.log(_this.lastPurch);
+            // console.log("jojo", this.history);
+            // console.log(this.lastPurch);
         });
     };
     BoughtComponent = __decorate([
@@ -1012,6 +1019,10 @@ var UsersService = /** @class */ (function () {
         this.http.get("/users/" + id)
             .subscribe(function (data) { return cb(data); });
     };
+    // findHist(id, cb) { // get user and populates on product id inside history cart arrays
+    //   this.http.get("/users/history/"+id)
+    //   .subscribe(data=>cb(data));
+    // }
     UsersService.prototype.addToCart = function (addProd, cb) {
         var id = localStorage.getItem("userId");
         this.http.put("/users/cart/" + id, addProd)

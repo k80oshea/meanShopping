@@ -30,9 +30,16 @@ export class BoughtComponent implements OnInit {
   getHistory() {
     this.uServ.find(this.userId, data=> {
       this.history = data.history;
+      console.log(data);
+      // console.log(data['history'][0]);
+      for(let x in data.history) {
+        for(let y in data.history[x]) {
+          console.log("boo", data.history[x][y].item);   
+        }       
+      }
       this.lastPurch = (this.history[this.history.length-1]);
-      console.log(this.history);
-      console.log(this.lastPurch);
+      // console.log("jojo", this.history);
+      // console.log(this.lastPurch);
     })
   }
 }

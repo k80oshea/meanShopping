@@ -31,74 +31,35 @@ It's not getting through to the second level of inside the array matrix to the d
         });
 
 
-(3) [Array(2), Array(0), Array(3)]
-0
-:
-Array(2)
-0
-:
-{_id: "5af5e21607e4b4377ccebab6", item: "5ae7919c6698cb21f49e2fa6", quantity: 3}
-1
-:
-{_id: "5af5e21a07e4b4377ccebab7", item: "5aea1a8b4d513440ac70daf8", quantity: 1}
-length
-:
-2
-__proto__
-:
-Array(0)
-1
-:
-Array(0)
-length
-:
-0
-__proto__
-:
-Array(0)
-2
-:
-Array(3)
-0
-:
-item
-:
-"5ae8b9790a739c3a6409c6ca"
-quantity
-:
-2
-_id
-:
-"5af5fdf654ef144560262667"
-__proto__
-:
-Object
-1
-:
-{_id: "5af5fdfc54ef144560262668", item: "5ae8dbd83111861c78dc8606", quantity: 1}
-2
-:
-{_id: "5af5fe1b54ef144560262669", item: "5ae8dc4a3111861c78dc8607", quantity: 1}
-length
-:
-3
-
-
-
-Cart with .populate()
-(3) [{…}, {…}, {…}]
-    0:
-        item:
+    // user.cart;
+    (2) [{…}, {…}]
+    0: {
+        item: {
             createdAt: "2018-05-01T19:01:13.439Z"
             desc: "Marine Layer - Summer Tunic"
-            inventory: 4
+            inventory: 3
             name: "Bali Tunic"
-            photosrc: "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/263638745114/BaliTunic_PIP_PI_M2.jpg"
+            photosrc: "tunic.jpg"
             price: 88
-            updatedAt: "2018-05-11T20:35:23.767Z"
-            __v: 0
+            updatedAt: "2018-05-17T21:33:01.121Z"
             _id: "5ae8b9790a739c3a6409c6ca"
-        quantity: 1
-        _id: "5af5fe8be9760848d052ad86"
-    1: {_id: "5af5fea8e9760848d052ad87", item: {…}, quantity: 1}
-    2: {_id: "5af5feace9760848d052ad88", item: {…}, quantity: 1}
+        }
+        quantity:1
+        _id:"5afdf50ddb9d9131bc31f79f"
+    }
+    1: { item: {…}, quantity: 2, _id: "5afdf512db9d9131bc31f7a0" }
+
+
+    // user.history:
+    (5) [Array(2), Array(2), Array(3), Array(3), Array(3)]
+    0:Array(2)
+        0:{
+            item: "5ae8b9790a739c3a6409c6ca", 
+            quantity: 2,
+            _id: "5af24260dce6852f10cb7937"
+        }
+        1:{ item: "5ae8ea78fc63980820a88478", quantity: 3, _id: "5af24266dce6852f10cb7938"}
+    1:(2) [{…}, {…}]
+    2:(3) [{…}, {…}, {…}]
+    3:(3) [{…}, {…}, {…}]
+    4:(3) [{…}, {…}, {…}]

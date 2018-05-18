@@ -34,6 +34,10 @@ export class UsersService {
     this.http.get("/users/"+id)
     .subscribe(data=>cb(data));
   }
+  // findHist(id, cb) { // get user and populates on product id inside history cart arrays
+  //   this.http.get("/users/history/"+id)
+  //   .subscribe(data=>cb(data));
+  // }
   addToCart(addProd, cb) { // adds single product and # items of product
     let id = localStorage.getItem("userId");
     this.http.put("/users/cart/"+ id, addProd)
@@ -57,7 +61,4 @@ export class UsersService {
     this.http.put("/users/update/"+ id, prod)
     .subscribe(data=>cb(data));
   }
-
-
-
 }

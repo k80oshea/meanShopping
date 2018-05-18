@@ -77,22 +77,28 @@ class UserController{
         res.json(true)
     }
     findCart(req, res) {
+        var x = 5;
         User.find({_id:req.params.id})
         .populate({
             model:"Product",
             path:"cart.item",
-            populate: {
-                model: "Product",
-                path: "history.item"
-            }
+            // populate: {
+            //     model: "Product",
+            //     path: "history[0][0].item" 
+            // }
         })
+        .populate({
+            model: "Product",
+            path: "history",},
+            { history.length : { $gte: 3 }}
+         )
         .exec((err, userArray)=> {
             if(err) {
                 res.json({errors: "Could not find user"});
             }
             else {
                 let user = userArray[0];
-                console.log(user.history)
+                console.log("historyyy", user.history)
                 // for(let x of user.history) {
                 //     populate({
                 //         model: "Product",
@@ -101,8 +107,19 @@ class UserController{
                 // }
                 // console.log("new populate", user.history)                
                 res.json(user);
+                // console.log("cart.item", user);
             }
         });
+        // for(let x of user.history) {
+        //     for(let y of x) {
+        //         y.populate('item').execPopulate(function() {
+        //             next();
+        //         });
+        //     }
+
+        // }
+        // console.log(" after loop", user);
+        // res.json(user);
     }
     cart(req, res) { 
         Product.findOne({_id: req.body.prodId}, (err, prod)=> {
@@ -111,6 +128,7 @@ class UserController{
             }
             else {
                 prod.inventory = prod.inventory - req.body.quantity;
+                console.log("pprroodd", prod.inventory, req.body.quantity)
                 prod.save(function(err) {
                     if(err) {
                         res.json({errors: "Unable to update product"});

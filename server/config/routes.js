@@ -8,6 +8,7 @@ module.exports = function(app){
     app.get("/logout", UserController.logout);    
     app.post("/register", UserController.register);
     app.get("/users/:id", UserController.findCart);
+    // app.get("/users/history/:id", UserController.findHist);
     app.put("/users/cart/:id", UserController.cart); // update (adding to cart)
     app.put("/users/drop/:id", UserController.drop); // drop entire item from cart
     app.put("/users/empty/:id", UserController.empty); // empty full cart
