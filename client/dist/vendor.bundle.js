@@ -91,7 +91,7 @@ webpackJsonp(["vendor"],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -6629,7 +6629,7 @@ function isPlatformWorkerUi(platformId) {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["Version"]('5.2.10');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["Version"]('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -6726,7 +6726,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -9699,7 +9699,7 @@ var HttpClientJsonpModule = /** @class */ (function () {
 /* unused harmony export removeSummaryDuplicates */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10334,7 +10334,7 @@ var Version = /** @class */ (function () {
 /**
  * \@stable
  */
-var VERSION = new Version('5.2.10');
+var VERSION = new Version('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -45186,7 +45186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__("./node_modules/rxjs/_esm5/Subject.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -45905,7 +45905,7 @@ var Version = /** @class */ (function () {
 /**
  * \@stable
  */
-var VERSION = new Version('5.2.10');
+var VERSION = new Version('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -64610,7 +64610,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -72603,7 +72603,7 @@ var FormBuilder = /** @class */ (function () {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.10');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -72806,7 +72806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -73458,7 +73458,7 @@ var CachedResourceLoader = /** @class */ (function (_super) {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.10');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -73570,7 +73570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__("./node_modules/tslib/tslib.es6.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -78917,7 +78917,7 @@ var By = /** @class */ (function () {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.10');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.11');
 
 /**
  * @fileoverview added by tsickle
@@ -79052,7 +79052,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_rxjs_operator_filter__ = __webpack_require__("./node_modules/rxjs/_esm5/operator/filter.js");
 /**
- * @license Angular v5.2.10
+ * @license Angular v5.2.11
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -86542,7 +86542,7 @@ function provideRouterInitializer() {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.10');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["Version"]('5.2.11');
 
 /**
  * @fileoverview added by tsickle

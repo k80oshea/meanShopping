@@ -89,9 +89,8 @@ class UserController{
         })
         .populate({
             model: "Product",
-            path: "history",},
-            { history.length : { $gte: 3 }}
-         )
+            path: "history",
+        })
         .exec((err, userArray)=> {
             if(err) {
                 res.json({errors: "Could not find user"});
@@ -116,6 +115,14 @@ class UserController{
         //             next();
         //         });
         //     }
+
+        // for(let x in user.history) {
+        //     console.log("getting here");
+        //     var populateQuery = { model: "Product", path: "user.history[x].item" }
+        //     user.find({})
+        //     .populate(populateQuery)
+        //     .execPopulate()
+        // }
 
         // }
         // console.log(" after loop", user);
