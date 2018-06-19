@@ -1,46 +1,194 @@
-as of 5/3/18
+6/19/18
 use hmstore
 switched to db hmstore
-db.users.find().pretty()
+show collections
+products
+users
+db.products.find().pretty()
 {
-        "_id" : ObjectId("5ae76b2abf89152b6cc26714"),
-        "admin" : true,
-        "cart" : null,
-        "history" : null,
-        "first" : "Key",
-        "last" : "Houck",
-        "email" : "admin@gmail.com",
-        "password" : "$2a$10$8EMfZp.MKjfp4P5D5JjD1OpoofLd307GwHup6e4Qmh3Tt1Vr/aEwW",
-        "createdAt" : ISODate("2018-04-30T19:14:51.500Z"),
-        "updatedAt" : ISODate("2018-04-30T19:14:51.500Z"),
-        "__v" : 0
+        "_id" : ObjectId("5ae7919c6698cb21f49e2fa6"),
+        "price" : 88,
+        "name" : "Lexi Midi Dress in Thin Grey/White Stripe",
+        "desc" : "Marine Layer - Summer Dress",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/9953733325/GreyWhiteStripeLexi_PI_PIP_M.jpg",
+        "createdAt" : ISODate("2018-04-30T21:58:52.429Z"),
+        "updatedAt" : ISODate("2018-05-11T18:33:58.576Z"),
+        "__v" : 0,
+        "inventory" : 0
 }
 {
-        "_id" : ObjectId("5ae88ad915169104d4f879c8"),
-        "admin" : false,
-        "cart" : [ ],
-        "history" : [ ],
-        "first" : "Katie",
-        "last" : "O'Shea",
-        "email" : "katie@gmail.com",
-        "password" : "$2a$10$jc3/ZfqhqOc.EpEJbnLNi.K61S9IoCwWU.wX5vJamq75OtfPrv0eC",
-        "createdAt" : ISODate("2018-05-01T15:42:18.510Z"),
-        "updatedAt" : ISODate("2018-05-01T15:42:18.510Z"),
-        "__v" : 0
+        "_id" : ObjectId("5ae8b9790a739c3a6409c6ca"),
+        "price" : 88,
+        "name" : "Bali Tunic",
+        "desc" : "Marine Layer - Summer Tunic",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/263638745114/BaliTunic_PIP_PI_M2.jpg",
+        "createdAt" : ISODate("2018-05-01T19:01:13.439Z"),
+        "updatedAt" : ISODate("2018-05-18T01:49:09.760Z"),
+        "__v" : 0,
+        "inventory" : 2
 }
 {
-        "_id" : ObjectId("5aeb5e8773e80f2728af9019"),
-        "admin" : false,
-        "cart" : [
-                ObjectId("5ae8b9790a739c3a6409c6ca"),
-                ObjectId("5ae8b9790a739c3a6409c6ca")
-        ],
-        "history" : [ ],
-        "first" : "Caroline",
-        "last" : "O'Shea",
-        "email" : "caro@gmail.com",
-        "password" : "$2a$10$RUEQ2EpCYChiR2gjGWodbe.X9b2LsMl5ihU1NSLTdVvpduqrzYzYi",
-        "createdAt" : ISODate("2018-05-03T19:09:59.822Z"),
-        "updatedAt" : ISODate("2018-05-03T20:09:14.849Z"),
-        "__v" : 1
+        "_id" : ObjectId("5ae8dade3111861c78dc8605"),
+        "price" : 110,
+        "name" : "Nina Crewneck Sweater",
+        "desc" : "Marine Layer - Summer Sweater",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226858270746/Nina-Crewneck_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-01T21:23:42.236Z"),
+        "updatedAt" : ISODate("2018-05-06T22:48:44.643Z"),
+        "__v" : 0,
+        "inventory" : 0
+}
+{
+        "_id" : ObjectId("5ae8dbd83111861c78dc8606"),
+        "price" : 78,
+        "name" : "Layla Wrap Skirt in Cream/Red Multi Stripe",
+        "desc" : "Marine Layer - Summer Skirt",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226950316058/LaylaStripe_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-01T21:27:52.463Z"),
+        "updatedAt" : ISODate("2018-05-18T03:22:41.013Z"),
+        "__v" : 0,
+        "inventory" : 14
+}
+{
+        "_id" : ObjectId("5ae8dc4a3111861c78dc8607"),
+        "price" : 35,
+        "name" : "Deer Valley Beanie",
+        "desc" : "Marine Layer - Hat - SALE",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_1/43685806106/1720083370_fullsize-web.JPG",
+        "createdAt" : ISODate("2018-05-01T21:29:46.592Z"),
+        "updatedAt" : ISODate("2018-05-18T01:49:39.956Z"),
+        "__v" : 0,
+        "inventory" : 2
+}
+{
+        "_id" : ObjectId("5ae8dd193111861c78dc8608"),
+        "price" : 44,
+        "name" : "Tulip Back Tank in Black",
+        "desc" : "Marine Layer - Summer Shirt",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226736373786/TinleyBlack_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-01T21:33:13.029Z"),
+        "updatedAt" : ISODate("2018-05-07T16:30:49.557Z"),
+        "__v" : 0,
+        "inventory" : 0
+}
+{
+        "_id" : ObjectId("5ae8ea78fc63980820a88478"),
+        "price" : 45,
+        "name" : "Everyday Scarf - Gals",
+        "desc" : "Marine Layer - Scarf - SALE",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/10453627789/EverdayScarf_PI_PIP_M.jpg",
+        "createdAt" : ISODate("2018-05-01T22:30:16.213Z"),
+        "updatedAt" : ISODate("2018-05-18T01:47:08.712Z"),
+        "__v" : 0,
+        "inventory" : 15
+}
+{
+        "_id" : ObjectId("5ae8eab4fc63980820a88479"),
+        "price" : 40,
+        "name" : "Arcadia Scarf",
+        "desc" : "Marine Layer -Scarf",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/10453627533/ArcadiaScarf_PI_PIP_M.jpg",
+        "createdAt" : ISODate("2018-05-01T22:31:16.876Z"),
+        "updatedAt" : ISODate("2018-05-17T17:52:57.384Z"),
+        "__v" : 0,
+        "inventory" : 3
+}
+{
+        "_id" : ObjectId("5ae8eaf8fc63980820a8847a"),
+        "price" : 80,
+        "name" : "Soko Medium Chain Dangle Choker",
+        "desc" : "Marine Layer - Necklace",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/10312754509/Soko_PI_M_PIP.jpg",
+        "createdAt" : ISODate("2018-05-01T22:32:24.226Z"),
+        "updatedAt" : ISODate("2018-05-08T18:45:28.759Z"),
+        "__v" : 0,
+        "inventory" : 17
+}
+{
+        "_id" : ObjectId("5ae8eb45fc63980820a8847b"),
+        "price" : 40,
+        "name" : "Soko Double Bar Ring",
+        "desc" : "Marine Layer - Ring",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_1/9087404493/PIP-double-bar-ring-1_512x.progressive_PI_PIP.jpg",
+        "createdAt" : ISODate("2018-05-01T22:33:41.862Z"),
+        "updatedAt" : ISODate("2018-05-18T01:47:09.715Z"),
+        "__v" : 0,
+        "inventory" : 7
+}
+{
+        "_id" : ObjectId("5ae8eb77fc63980820a8847c"),
+        "price" : 68,
+        "name" : "Radley Reversible Raglan in Marlin/White",
+        "desc" : "Marine Layer -Shirt",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226817146906/Radley_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-01T22:34:31.106Z"),
+        "updatedAt" : ISODate("2018-05-18T01:52:45.634Z"),
+        "__v" : 0,
+        "inventory" : 6
+}
+{
+        "_id" : ObjectId("5ae8ebcafc63980820a8847d"),
+        "price" : 40,
+        "name" : "Soko Petite Paddle Studs",
+        "desc" : "Marine Layer - Earrings",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_1/226983018522/Paddle_Earings_PIP_PI_1.jpg",
+        "createdAt" : ISODate("2018-05-01T22:35:54.225Z"),
+        "updatedAt" : ISODate("2018-05-18T01:52:53.639Z"),
+        "__v" : 0,
+        "inventory" : 8
+}
+{
+        "_id" : ObjectId("5ae8ec0bfc63980820a8847e"),
+        "price" : 58,
+        "name" : "Sunski Singlefin in Rose/Grey",
+        "desc" : "Marine Layer - Sunglasses",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_1/277108457498/Singlefin_Rose_Grey_PIP_PI.jpg",
+        "createdAt" : ISODate("2018-05-01T22:36:59.428Z"),
+        "updatedAt" : ISODate("2018-05-18T03:22:48.281Z"),
+        "__v" : 0,
+        "inventory" : 10
+}
+{
+        "_id" : ObjectId("5ae9e20ee18f3007a869c10a"),
+        "price" : 145,
+        "name" : "Reversible Lady Corbet in Marlin/Charcoal",
+        "desc" : "Marine Layer - Sweatshirtz",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/215276879898/LadyCorbet_PIP_PI.jpg",
+        "createdAt" : ISODate("2018-05-02T16:06:38.175Z"),
+        "updatedAt" : ISODate("2018-05-11T20:35:56.512Z"),
+        "__v" : 0,
+        "inventory" : 1
+}
+{
+        "_id" : ObjectId("5aea1a8b4d513440ac70daf8"),
+        "price" : 88,
+        "name" : "April Dress",
+        "desc" : "Marine Layer - Dress",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226906865690/AprilDress_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-02T20:07:39.560Z"),
+        "updatedAt" : ISODate("2018-05-11T21:02:38.817Z"),
+        "__v" : 0,
+        "inventory" : 5
+}
+{
+        "_id" : ObjectId("5aea50b56b67693a30bd90d4"),
+        "price" : 78,
+        "name" : "Avery Mini Skirt",
+        "desc" : "Marine Layer - Skirt",
+        "photosrc" : "https://s3.amazonaws.com/shopify-custom-fields/marinelayer.myshopify.com/fields/products/product_images_desktop_2/226950709274/AveryMini_PIP_PI_M.jpg",
+        "createdAt" : ISODate("2018-05-02T23:58:45.912Z"),
+        "updatedAt" : ISODate("2018-05-17T20:36:35.063Z"),
+        "__v" : 0,
+        "inventory" : 26
+}
+{
+        "_id" : ObjectId("5aef7f8372e1ee3138680197"),
+        "price" : 3,
+        "inventory" : 3,
+        "name" : "asdnl",
+        "desc" : "adsf.kln",
+        "photosrc" : "lkansf",
+        "createdAt" : ISODate("2018-05-06T22:19:47.899Z"),
+        "updatedAt" : ISODate("2018-05-06T22:19:47.899Z"),
+        "__v" : 0
 }
