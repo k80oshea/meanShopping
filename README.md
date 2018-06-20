@@ -1,4 +1,4 @@
-MEAN Shopping
+MEAN Shopping Application - In Progress
 
 • An e-commerce application utilizing Angular for client-side operations to render regular and nested components through a router outlet for dynamic updates with IO data transference and event emitting. Improved UX/UI through use of Bootstrap toolkit.
 
