@@ -6,4 +6,4 @@ MEAN Shopping Application - In Progress
 
 •	Applied administrator levels to login/registration to determine user’s functionality as an administrator or regular shopper. Application displays user’s cart of chosen items, decrements inventory quantity upon purchase, and saves purchase history.  
 
-•	Deployed and administered application on AWS Ubuntu server - 18.208.178.59.
+•	Deployed and administered application on AWS Ubuntu server (currently offline)
